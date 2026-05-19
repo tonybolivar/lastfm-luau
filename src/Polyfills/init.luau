@@ -7,12 +7,16 @@
 local Errors = require("@self/Errors")
 
 local function detectRuntime(): string
-	local gameGlobal = rawget(_G, "game")
-	if gameGlobal then
-		local ok = pcall(function()
+	-- Roblox exposes `game` as a script-scoped global (not via _G);
+	-- Lune leaves it undefined. pcall keeps either path safe.
+	local ok, gameGlobal = pcall(function()
+		return game
+	end)
+	if ok and gameGlobal then
+		local ok2 = pcall(function()
 			return gameGlobal:GetService("HttpService")
 		end)
-		if ok then
+		if ok2 then
 			return "Roblox"
 		end
 	end
