@@ -4,6 +4,6 @@
 	"typeErrors": true,
 	"globals": [],
 	"aliases": {
-		"self": "./"
+		"self": "./src"
 	}
 }
