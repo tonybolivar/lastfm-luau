@@ -106,8 +106,9 @@ function Future.Ok<E, T>(value: T): FutureLike<E, T>
 		return value
 	end)
 	-- Pre-resolve so callers don't even have to await.
-	(f :: any)._Result = makeOk(value);
-	(f :: any)._Done = true
+	local fAny = f :: any
+	fAny._Result = makeOk(value)
+	fAny._Done = true
 	return f
 end
 
@@ -115,8 +116,9 @@ function Future.Err<E, T>(err: E): FutureLike<E, T>
 	local f = Future.New(function(): T
 		error(err)
 	end)
-	;(f :: any)._Result = makeErr(err)
-	;(f :: any)._Done = true
+	local fAny = f :: any
+	fAny._Result = makeErr(err)
+	fAny._Done = true
 	return f
 end
 
