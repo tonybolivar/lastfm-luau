@@ -2,9 +2,9 @@
 -- Ephemeral session store. Used by tests and as the default for non-Roblox
 -- runtimes when no other store is configured.
 
-local Future = require(script.Parent.Parent.Future)
-local Types = require(script.Parent.Parent.Types)
-local Errors = require(script.Parent.Parent.Errors)
+local Future = require("@self/Future")
+local Types = require("@self/Types")
+local Errors = require("@self/Errors")
 
 local InMemory = {}
 

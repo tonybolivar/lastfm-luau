@@ -1,7 +1,7 @@
 --!strict
 local Framework = require("../Framework")
-local Cache = require("../../src/Cache")
-local InMemoryCache = require("../../src/Cache/InMemoryCache")
+local Cache = require("@self/Cache")
+local InMemoryCache = require("@self/Cache/InMemoryCache")
 
 return function()
 	Framework.describe("Cache.KeyFor", function()

@@ -11,7 +11,7 @@
 --
 -- The result is passed to the API as the `api_sig` parameter.
 
-local Md5 = require(script.Parent.Md5)
+local Md5 = require("@self/Md5")
 
 local Signing = {}
 

@@ -2,8 +2,8 @@
 -- Shared type aliases re-exported from across the library.
 -- Consumers usually `require(LastFM.Types)` once and use everything from here.
 
-local Future = require(script.Parent.Future)
-local Errors = require(script.Parent.Errors)
+local Future = require("@self/Future")
+local Errors = require("@self/Errors")
 
 export type FutureLike<E, T> = Future.FutureLike<E, T>
 export type Result<E, T> = Future.Result<E, T>

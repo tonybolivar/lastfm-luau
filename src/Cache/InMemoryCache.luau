@@ -1,5 +1,5 @@
 --!strict
-local Cache = require(script.Parent)
+local Cache = require("@self/Cache")
 
 local InMemoryCache = {}
 

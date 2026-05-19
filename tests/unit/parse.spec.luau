@@ -1,6 +1,6 @@
 --!strict
 local Framework = require("../Framework")
-local Parse = require("../../src/Parse")
+local Parse = require("@self/Parse")
 
 return function()
 	Framework.describe("Parse.Number", function()

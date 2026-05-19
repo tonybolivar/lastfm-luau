@@ -2,7 +2,7 @@
 -- Typed records for Last.fm resources (Artist, Track, Album, Tag, User).
 -- These are the shape of values returned by Rest methods after parsing.
 
-local Types = require(script.Parent.Types)
+local Types = require("@self/Types")
 
 export type Wiki = {
 	Summary: string,

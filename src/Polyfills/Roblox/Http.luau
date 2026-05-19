@@ -1,7 +1,7 @@
 --!nocheck
 -- Roblox HTTP adapter. Loaded only when runtime detection picks Roblox.
 
-local Errors = require(script.Parent.Parent.Parent.Errors)
+local Errors = require("@self/Errors")
 
 local HttpService = game:GetService("HttpService")
 

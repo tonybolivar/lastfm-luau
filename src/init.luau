@@ -8,17 +8,17 @@
 --
 -- See README.md for the full guide. License: MIT.
 
-local Client = require(script.Client)
-local Polyfills = require(script.Polyfills)
-local SessionStore = require(script.SessionStore)
-local Classes = require(script.Classes)
-local Resources = require(script.Resources)
-local Types = require(script.Types)
-local Errors = require(script.Errors)
-local Future = require(script.Future)
-local Logger = require(script.Logger)
-local Page = require(script.Page)
-local Secret = require(script.Secret)
+local Client = require("@self/Client")
+local Polyfills = require("@self/Polyfills")
+local SessionStore = require("@self/SessionStore")
+local Classes = require("@self/Classes")
+local Resources = require("@self/Resources")
+local Types = require("@self/Types")
+local Errors = require("@self/Errors")
+local Future = require("@self/Future")
+local Logger = require("@self/Logger")
+local Page = require("@self/Page")
+local Secret = require("@self/Secret")
 
 local LastFM = {}
 

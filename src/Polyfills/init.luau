@@ -4,7 +4,7 @@
 -- because both branches reference runtime-specific globals (`game`, `task`) and
 -- runtime-specific require forms (`script.X` vs `require("@lune/X")`).
 
-local Errors = require(script.Parent.Errors)
+local Errors = require("@self/Errors")
 
 local function detectRuntime(): string
 	local gameGlobal = rawget(_G, "game")
@@ -26,9 +26,9 @@ local runtime = detectRuntime()
 
 local Http, Json, AuthGui, Fs
 if runtime == "Roblox" then
-	Http = require(script.Roblox.Http)
-	Json = require(script.Roblox.Json)
-	AuthGui = require(script.Roblox.AuthGui)
+	Http = require("@self/Polyfills/Roblox/Http")
+	Json = require("@self/Polyfills/Roblox/Json")
+	AuthGui = require("@self/Polyfills/Roblox/AuthGui")
 elseif runtime == "Lune" then
 	Http = require("@self/Polyfills/Lune/Http")
 	Json = require("@self/Polyfills/Lune/Json")

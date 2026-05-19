@@ -9,11 +9,11 @@
 -- test will fail unless the new __eq also type-checks defensively.
 
 local Framework = require("../Framework")
-local Tag = require("../../src/Classes/Tag")
-local Artist = require("../../src/Classes/Artist")
-local Album = require("../../src/Classes/Album")
-local Track = require("../../src/Classes/Track")
-local User = require("../../src/Classes/User")
+local Tag = require("@self/Classes/Tag")
+local Artist = require("@self/Classes/Artist")
+local Album = require("@self/Classes/Album")
+local Track = require("@self/Classes/Track")
+local User = require("@self/Classes/User")
 
 return function()
 	Framework.describe("pylast #531 parity: Class equality is type-safe", function()

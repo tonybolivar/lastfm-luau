@@ -1,7 +1,7 @@
 --!strict
 local Framework = require("../Framework")
 local FakeHttp = require("../FakeHttp")
-local LastFM = require("../../src")
+local LastFM = require("@self")
 
 return function()
 	Framework.describe("User namespace", function()

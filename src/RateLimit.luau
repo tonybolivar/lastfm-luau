@@ -5,7 +5,7 @@
 -- The `Wait` function is injected so the limiter stays runtime-agnostic
 -- (Roblox `task.wait`, Lune `@lune/task`.wait, or a fake for tests).
 
-local Errors = require(script.Parent.Errors)
+local Errors = require("@self/Errors")
 
 export type WaitFn = (seconds: number) -> ()
 

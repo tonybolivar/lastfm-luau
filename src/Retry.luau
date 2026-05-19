@@ -2,7 +2,7 @@
 -- Retry with exponential backoff and full jitter.
 -- Only retries errors flagged as retryable by Errors.IsRetryable (Transient + RateLimited).
 
-local Errors = require(script.Parent.Errors)
+local Errors = require("@self/Errors")
 
 export type WaitFn = (seconds: number) -> ()
 

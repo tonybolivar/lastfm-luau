@@ -2,10 +2,10 @@
 -- SessionStore namespace. Only loads runtime-specific implementations
 -- on the matching runtime; InMemory is portable and always available.
 
-local Polyfills = require(script.Parent.Polyfills)
-local Future = require(script.Parent.Future)
-local Errors = require(script.Parent.Errors)
-local Types = require(script.Parent.Types)
+local Polyfills = require("@self/Polyfills")
+local Future = require("@self/Future")
+local Errors = require("@self/Errors")
+local Types = require("@self/Types")
 
 local SessionStore = {}
 
@@ -18,14 +18,14 @@ export type SessionStore = {
 	ClearAsync: (self: SessionStore, key: string) -> any,
 }
 
-SessionStore.InMemory = require(script.InMemory)
+SessionStore.InMemory = require("@self/SessionStore/InMemory")
 
 if Polyfills.Runtime == "Roblox" then
-	SessionStore.RobloxDataStore = require(script.RobloxDataStore)
+	SessionStore.RobloxDataStore = require("@self/SessionStore/RobloxDataStore")
 end
 
 if Polyfills.Runtime == "Lune" then
-	SessionStore.LuneFile = require(script.LuneFile)
+	SessionStore.LuneFile = require("@self/SessionStore/LuneFile")
 end
 
 return SessionStore

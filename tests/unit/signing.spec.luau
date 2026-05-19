@@ -1,7 +1,7 @@
 --!strict
 local Framework = require("../Framework")
-local Signing = require("../../src/Signing")
-local Md5 = require("../../src/Md5")
+local Signing = require("@self/Signing")
+local Md5 = require("@self/Md5")
 
 return function()
 	Framework.describe("Signing.GenerateSignature", function()

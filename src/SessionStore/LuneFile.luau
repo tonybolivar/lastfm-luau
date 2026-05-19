@@ -2,9 +2,9 @@
 -- File-backed session store for Lune runtimes. Stores sessions as a JSON
 -- object keyed by user identifier, with atomic writes (tmp + rename).
 
-local Polyfills = require(script.Parent.Parent.Polyfills)
-local Future = require(script.Parent.Parent.Future)
-local Errors = require(script.Parent.Parent.Errors)
+local Polyfills = require("@self/Polyfills")
+local Future = require("@self/Future")
+local Errors = require("@self/Errors")
 
 local LuneFile = {}
 

@@ -7,9 +7,9 @@
 -- - Logs a "warn" via Config.Logger when DataStore budget falls below 10%
 --   of the relevant request type.
 
-local Polyfills = require(script.Parent.Parent.Polyfills)
-local Errors = require(script.Parent.Parent.Errors)
-local Future = require(script.Parent.Parent.Future)
+local Polyfills = require("@self/Polyfills")
+local Errors = require("@self/Errors")
+local Future = require("@self/Future")
 
 local RobloxDataStore = {}
 

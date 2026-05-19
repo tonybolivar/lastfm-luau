@@ -7,8 +7,8 @@
 
 local Framework = require("../Framework")
 local FakeHttp = require("../FakeHttp")
-local LastFM = require("../../src")
-local Album = require("../../src/Classes/Album")
+local LastFM = require("@self")
+local Album = require("@self/Classes/Album")
 
 return function()
 	Framework.describe("pylast #529 parity: Album.GetAlbumArtistFromTracks", function()

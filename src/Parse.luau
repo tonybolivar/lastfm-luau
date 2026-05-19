@@ -10,8 +10,8 @@
 --
 -- These helpers normalize all of that.
 
-local Types = require(script.Parent.Types)
-local Resources = require(script.Parent.Resources)
+local Types = require("@self/Types")
+local Resources = require("@self/Resources")
 
 local Parse = {}
 
@@ -143,6 +143,12 @@ function Parse.Attr(obj: any, ...: string): any
 end
 
 -- Normalize Last.fm's inconsistent list shapes to always-an-array.
+-- Shapes we have to handle:
+--   nil                   -> {}
+--   "" (string)           -> {}
+--   {}  (empty table)     -> {}     -- JSON `[]` or `{}` decoded to empty Luau table
+--   { a, b, c }           -> { a, b, c }   -- already a list
+--   { key = ... }         -> { { key = ... } }   -- single object, dict-shaped
 function Parse.List(raw: any): { any }
 	if raw == nil then
 		return {}
@@ -150,10 +156,12 @@ function Parse.List(raw: any): { any }
 	if type(raw) ~= "table" then
 		return {}
 	end
+	if next(raw :: any) == nil then
+		return {}
+	end
 	if (raw :: any)[1] ~= nil then
 		return raw :: any
 	end
-	-- Single object wrapped as the value itself.
 	return { raw }
 end
 

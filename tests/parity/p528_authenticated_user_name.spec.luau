@@ -8,7 +8,7 @@
 
 local Framework = require("../Framework")
 local FakeHttp = require("../FakeHttp")
-local LastFM = require("../../src")
+local LastFM = require("@self")
 
 return function()
 	Framework.describe("pylast #528 parity: AuthenticatedUser name resolution", function()

@@ -8,7 +8,7 @@
 
 local Framework = require("../Framework")
 local FakeHttp = require("../FakeHttp")
-local LastFM = require("../../src")
+local LastFM = require("@self")
 
 return function()
 	Framework.describe("pylast #532 parity: cache key includes username", function()

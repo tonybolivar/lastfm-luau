@@ -1,6 +1,6 @@
 --!strict
 local Framework = require("../Framework")
-local Secret = require("../../src/Secret")
+local Secret = require("@self/Secret")
 
 return function()
 	Framework.describe("Secret", function()

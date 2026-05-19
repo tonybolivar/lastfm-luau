@@ -1,9 +1,9 @@
 --!strict
-local Request = require(script.Parent.Request)
-local Future = require(script.Parent.Parent.Future)
-local Parse = require(script.Parent.Parent.Parse)
-local Md5 = require(script.Parent.Parent.Md5)
-local Types = require(script.Parent.Parent.Types)
+local Request = require("@self/Rest/Request")
+local Future = require("@self/Future")
+local Parse = require("@self/Parse")
+local Md5 = require("@self/Md5")
+local Types = require("@self/Types")
 
 local Auth = {}
 Auth.__index = Auth

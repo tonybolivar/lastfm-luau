@@ -1,9 +1,9 @@
 --!strict
-local Request = require(script.Parent.Request)
-local Future = require(script.Parent.Parent.Future)
-local Parse = require(script.Parent.Parent.Parse)
-local Page = require(script.Parent.Parent.Page)
-local Resources = require(script.Parent.Parent.Resources)
+local Request = require("@self/Rest/Request")
+local Future = require("@self/Future")
+local Parse = require("@self/Parse")
+local Page = require("@self/Page")
+local Resources = require("@self/Resources")
 
 local Tag = {}
 Tag.__index = Tag

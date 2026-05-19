@@ -3,8 +3,8 @@
 -- Rest layer captures with the original method + base params, so :NextAsync
 -- and friends can re-issue the call cleanly.
 
-local Future = require(script.Parent.Future)
-local Errors = require(script.Parent.Errors)
+local Future = require("@self/Future")
+local Errors = require("@self/Errors")
 
 export type Refetch<T> = (page: number) -> Future.FutureLike<Errors.LastFMError, Page<T>>
 

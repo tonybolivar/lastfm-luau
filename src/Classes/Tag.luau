@@ -1,5 +1,5 @@
 --!strict
-local Resources = require(script.Parent.Parent.Resources)
+local Resources = require("@self/Resources")
 
 local Tag = {}
 Tag.__index = Tag

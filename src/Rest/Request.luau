@@ -4,13 +4,13 @@
 -- This is the only place that knows the wire format. Namespace modules call
 -- Request.Execute(client, methodName, params) and get parsed JSON back.
 
-local Endpoints = require(script.Parent.Parent.Endpoints)
-local Signing = require(script.Parent.Parent.Signing)
-local Cache = require(script.Parent.Parent.Cache)
-local Errors = require(script.Parent.Parent.Errors)
-local Secret = require(script.Parent.Parent.Secret)
-local Retry = require(script.Parent.Parent.Retry)
-local Polyfills = require(script.Parent.Parent.Polyfills)
+local Endpoints = require("@self/Endpoints")
+local Signing = require("@self/Signing")
+local Cache = require("@self/Cache")
+local Errors = require("@self/Errors")
+local Secret = require("@self/Secret")
+local Retry = require("@self/Retry")
+local Polyfills = require("@self/Polyfills")
 
 local Request = {}
 

@@ -5,15 +5,15 @@
 
 local Rest = {}
 
-Rest.Request = require(script.Request)
-Rest.Album = require(script.Album)
-Rest.Artist = require(script.Artist)
-Rest.Auth = require(script.Auth)
-Rest.Chart = require(script.Chart)
-Rest.Geo = require(script.Geo)
-Rest.Library = require(script.Library)
-Rest.Tag = require(script.Tag)
-Rest.Track = require(script.Track)
-Rest.User = require(script.User)
+Rest.Request = require("@self/Rest/Request")
+Rest.Album = require("@self/Rest/Album")
+Rest.Artist = require("@self/Rest/Artist")
+Rest.Auth = require("@self/Rest/Auth")
+Rest.Chart = require("@self/Rest/Chart")
+Rest.Geo = require("@self/Rest/Geo")
+Rest.Library = require("@self/Rest/Library")
+Rest.Tag = require("@self/Rest/Tag")
+Rest.Track = require("@self/Rest/Track")
+Rest.User = require("@self/Rest/User")
 
 return Rest

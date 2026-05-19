@@ -4,9 +4,9 @@
 -- so the same compilation can live under multiple artist names. These helpers
 -- resolve the actual album-artist by inspecting track data.
 
-local Future = require(script.Parent.Parent.Future)
-local Resources = require(script.Parent.Parent.Resources)
-local Errors = require(script.Parent.Parent.Errors)
+local Future = require("@self/Future")
+local Resources = require("@self/Resources")
+local Errors = require("@self/Errors")
 
 local Album = {}
 Album.__index = Album

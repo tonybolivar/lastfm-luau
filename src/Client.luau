@@ -3,17 +3,17 @@
 -- session store, logger, polyfills), and mounts the 9 REST namespaces as
 -- direct fields (`client.Track`, `client.User`, etc.).
 
-local Polyfills = require(script.Parent.Polyfills)
-local InMemoryCache = require(script.Parent.Cache.InMemoryCache)
-local RateLimit = require(script.Parent.RateLimit)
-local Secret = require(script.Parent.Secret)
-local Logger = require(script.Parent.Logger)
-local Errors = require(script.Parent.Errors)
-local Future = require(script.Parent.Future)
-local Types = require(script.Parent.Types)
-local Resources = require(script.Parent.Resources)
-local Rest = require(script.Parent.Rest)
-local Parse = require(script.Parent.Parse)
+local Polyfills = require("@self/Polyfills")
+local InMemoryCache = require("@self/Cache/InMemoryCache")
+local RateLimit = require("@self/RateLimit")
+local Secret = require("@self/Secret")
+local Logger = require("@self/Logger")
+local Errors = require("@self/Errors")
+local Future = require("@self/Future")
+local Types = require("@self/Types")
+local Resources = require("@self/Resources")
+local Rest = require("@self/Rest")
+local Parse = require("@self/Parse")
 
 local Client = {}
 Client.__index = Client

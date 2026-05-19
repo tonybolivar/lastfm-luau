@@ -1,6 +1,6 @@
 --!strict
 local Framework = require("../Framework")
-local Errors = require("../../src/Errors")
+local Errors = require("@self/Errors")
 
 return function()
 	Framework.describe("Errors.FromApiCode", function()

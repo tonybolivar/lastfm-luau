@@ -1,6 +1,6 @@
 --!strict
 local Framework = require("../Framework")
-local Page = require("../../src/Page")
+local Page = require("@self/Page")
 
 return function()
 	Framework.describe("Page", function()
@@ -12,7 +12,7 @@ return function()
 				TotalPages = totalPages,
 				TotalItems = totalPages * 3,
 				Refetch = function(p)
-					return require("../../src/Future").Ok(makePage(p, totalPages))
+					return require("@self/Future").Ok(makePage(p, totalPages))
 				end,
 			})
 		end
@@ -42,7 +42,7 @@ return function()
 
 		Framework.it("Empty page has zero items and zero pages", function()
 			local empty = Page.Empty(function(_p)
-				return require("../../src/Future").Ok(makePage(1, 0))
+				return require("@self/Future").Ok(makePage(1, 0))
 			end)
 			Framework.expect(#empty.Items).toBe(0)
 			Framework.expect(empty.TotalPages).toBe(0)

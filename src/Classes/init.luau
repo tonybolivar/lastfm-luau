@@ -6,10 +6,10 @@
 
 local Classes = {}
 
-Classes.Artist = require(script.Artist)
-Classes.Album = require(script.Album)
-Classes.Track = require(script.Track)
-Classes.Tag = require(script.Tag)
-Classes.User = require(script.User)
+Classes.Artist = require("@self/Classes/Artist")
+Classes.Album = require("@self/Classes/Album")
+Classes.Track = require("@self/Classes/Track")
+Classes.Tag = require("@self/Classes/Tag")
+Classes.User = require("@self/Classes/User")
 
 return Classes

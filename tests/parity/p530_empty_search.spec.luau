@@ -7,7 +7,7 @@
 
 local Framework = require("../Framework")
 local FakeHttp = require("../FakeHttp")
-local LastFM = require("../../src")
+local LastFM = require("@self")
 
 return function()
 	Framework.describe("pylast #530 parity: empty searches don't crash", function()
