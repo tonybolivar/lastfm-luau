@@ -37,19 +37,23 @@ end
 
 function bucketMt.Acquire(self: Bucket)
 	local s = self :: any
-	refill(s)
-	if s._Tokens >= 1 then
-		s._Tokens -= 1
-		return
+	-- Loop instead of single-wait: when multiple coroutines wait on the same
+	-- bucket and wake together, only the first refill recovers a token. The
+	-- rest must re-check and wait again, otherwise the bucket undercounts and
+	-- the limiter effectively does no throttling under concurrent callers.
+	while true do
+		refill(s)
+		if s._Tokens >= 1 then
+			s._Tokens -= 1
+			return
+		end
+		if s._ThrowOnLimit then
+			error(Errors.New("RateLimited", "Rate limit exceeded (local bucket)"), 0)
+		end
+		local needed = 1 - s._Tokens
+		local waitSeconds = needed / s._RefillRate
+		s._Wait(waitSeconds)
 	end
-	if s._ThrowOnLimit then
-		error(Errors.New("RateLimited", "Rate limit exceeded (local bucket)"), 0)
-	end
-	local needed = 1 - s._Tokens
-	local waitSeconds = needed / s._RefillRate
-	s._Wait(waitSeconds)
-	refill(s)
-	s._Tokens = math.max(0, s._Tokens - 1)
 end
 
 function bucketMt.Available(self: Bucket): number
