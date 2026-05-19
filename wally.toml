@@ -10,9 +10,13 @@ repository = "https://github.com/tonybolivar/lastfm-luau"
 homepage = "https://github.com/tonybolivar/lastfm-luau"
 include = ["src/**", "wally.toml", "LICENSE", "README.md"]
 
+# lastfm-luau ships self-contained: pure-Luau MD5 in src/Md5.luau, a small
+# Future/Result implementation in src/Future.luau, and a minimal in-tree test
+# framework. No runtime or dev dependencies. If you'd rather pin to upstream
+# implementations, the obvious swaps are:
+#   - dekkonot/md5  (replaces src/Md5.luau)
+#   - yetanotherclown/luau-futures  (replaces src/Future.luau)
+#   - dphfox/tiniest  (replaces tests/Framework.luau)
 [dependencies]
-Future = "yetanotherclown/luau-futures@2.0.0-beta.3"
-Md5    = "dekkonot/md5@^1.0.0"
 
 [dev-dependencies]
-Tiniest = "dphfox/tiniest@^0.1.0"

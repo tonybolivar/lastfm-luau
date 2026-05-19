@@ -54,7 +54,7 @@ local CODE_TO_KIND: { [number]: ErrorKind } = {
 }
 
 function Errors.FromApiCode(code: number, message: string, method: string?): LastFMError
-	local kind = CODE_TO_KIND[code] or "ApiError"
+	local kind: ErrorKind = CODE_TO_KIND[code] or "ApiError"
 	return Errors.New(kind, message, { ApiCode = code, Method = method })
 end
 

@@ -35,7 +35,8 @@ return function()
 				["user.getInfo"] = [[{"user":{"name":"bob","url":"http://last.fm/user/bob"}}]],
 			})
 			local client = LastFM.new({
-				ApiKey = "k", Secret = "s",
+				ApiKey = "k",
+				Secret = "s",
 				HttpClient = fake,
 				RateLimit = { Enabled = false },
 			})

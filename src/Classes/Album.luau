@@ -11,10 +11,12 @@ local Errors = require("@self/Errors")
 local Album = {}
 Album.__index = Album
 
-export type Album = typeof(setmetatable(
-	{} :: Resources.Album & { _Client: any },
-	Album
-))
+export type Album = Resources.Album & {
+	_Client: any,
+	Sync: (self: Album, data: Resources.Album) -> (),
+	GetAlbumArtistFromTracks: (self: Album) -> string?,
+	FindCompilationVariantAsync: (self: Album) -> Future.FutureLike<Errors.LastFMError, Album?>,
+}
 
 function Album.New(data: Resources.Album, client: any?): Album
 	local self: any = setmetatable(table.clone(data :: any), Album)

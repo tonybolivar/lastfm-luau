@@ -4,10 +4,7 @@ local Resources = require("@self/Resources")
 local Artist = {}
 Artist.__index = Artist
 
-export type Artist = typeof(setmetatable(
-	{} :: Resources.Artist & { _Client: any },
-	Artist
-))
+export type Artist = typeof(setmetatable({} :: Resources.Artist & { _Client: any }, Artist))
 
 function Artist.New(data: Resources.Artist, client: any?): Artist
 	local self: any = setmetatable(table.clone(data :: any), Artist)

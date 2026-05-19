@@ -113,13 +113,35 @@ function Parse.Images(raw: any): { Types.Image }?
 	return result
 end
 
+-- Strip HTML tags + decode common entities + collapse whitespace.
+-- Last.fm wiki summaries are full of <a href="..."> links and HTML escapes;
+-- most callers want clean text. The raw original is preserved on SummaryRaw
+-- and ContentRaw if you want to render HTML yourself.
+local function stripHtml(s: string): string
+	s = (string.gsub(s, "<[^>]+>", ""))
+	s = (string.gsub(s, "&amp;", "&"))
+	s = (string.gsub(s, "&lt;", "<"))
+	s = (string.gsub(s, "&gt;", ">"))
+	s = (string.gsub(s, "&quot;", '"'))
+	s = (string.gsub(s, "&#39;", "'"))
+	s = (string.gsub(s, "&apos;", "'"))
+	s = (string.gsub(s, "&nbsp;", " "))
+	s = (string.gsub(s, "%s+", " "))
+	s = (string.gsub(s, "^%s*(.-)%s*$", "%1"))
+	return s
+end
+
 function Parse.Wiki(raw: any): Resources.Wiki?
 	if type(raw) ~= "table" then
 		return nil
 	end
+	local summaryRaw = Parse.String((raw :: any).summary) or ""
+	local contentRaw = Parse.String((raw :: any).content) or ""
 	return {
-		Summary = Parse.String((raw :: any).summary) or "",
-		Content = Parse.String((raw :: any).content) or "",
+		Summary = stripHtml(summaryRaw),
+		Content = stripHtml(contentRaw),
+		SummaryRaw = summaryRaw,
+		ContentRaw = contentRaw,
 		Published = Parse.LastDate((raw :: any).published),
 		Url = Parse.String((raw :: any).url),
 	}
@@ -209,19 +231,13 @@ function Parse.Artist(raw: any): Resources.Artist
 		Url = Parse.String((raw :: any).url),
 		Images = Parse.Images((raw :: any).image),
 		Listeners = Parse.Number(
-			if type((raw :: any).stats) == "table"
-				then (raw :: any).stats.listeners
-				else (raw :: any).listeners
+			if type((raw :: any).stats) == "table" then (raw :: any).stats.listeners else (raw :: any).listeners
 		),
 		PlayCount = Parse.Number(
-			if type((raw :: any).stats) == "table"
-				then (raw :: any).stats.playcount
-				else (raw :: any).playcount
+			if type((raw :: any).stats) == "table" then (raw :: any).stats.playcount else (raw :: any).playcount
 		),
 		UserPlayCount = Parse.Number(
-			if type((raw :: any).stats) == "table"
-				then (raw :: any).stats.userplaycount
-				else (raw :: any).userplaycount
+			if type((raw :: any).stats) == "table" then (raw :: any).stats.userplaycount else (raw :: any).userplaycount
 		),
 		Streamable = Parse.Boolean((raw :: any).streamable),
 		OnTour = Parse.Boolean((raw :: any).ontour),

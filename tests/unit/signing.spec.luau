@@ -14,10 +14,8 @@ return function()
 		end)
 
 		Framework.it("excludes format and callback from signature", function()
-			local withExtras = Signing.GenerateSignature(
-				{ method = "x", api_key = "k", format = "json", callback = "cb" },
-				"s"
-			)
+			local withExtras =
+				Signing.GenerateSignature({ method = "x", api_key = "k", format = "json", callback = "cb" }, "s")
 			local without = Signing.GenerateSignature({ method = "x", api_key = "k" }, "s")
 			Framework.expect(withExtras).toBe(without)
 		end)

@@ -5,7 +5,7 @@ local Secret = require("@self/Secret")
 return function()
 	Framework.describe("Secret", function()
 		Framework.it("masks half the value in tostring", function()
-			local s = Secret.New("supersecret")  -- 11 chars; half = 5
+			local s = Secret.New("supersecret") -- 11 chars; half = 5
 			local repr = tostring(s)
 			-- Should contain prefix "super" but mask the rest
 			Framework.expect(string.find(repr, "super") ~= nil).toBeTruthy()

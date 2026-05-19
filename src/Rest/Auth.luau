@@ -50,7 +50,11 @@ end
 -- Mobile auth — exchanges username + plaintext password (or pre-hashed password)
 -- for a session key. The library hashes the password if `Password` is provided;
 -- pass `AuthToken` instead if you already have MD5(username .. MD5(password)).
-function Auth.GetMobileSessionAsync(self: AuthNamespace, username: string, opts: { Password: string?, AuthToken: string? })
+function Auth.GetMobileSessionAsync(
+	self: AuthNamespace,
+	username: string,
+	opts: { Password: string?, AuthToken: string? }
+)
 	return Future.New(function(): Types.Session
 		local authToken: string
 		if opts.AuthToken then

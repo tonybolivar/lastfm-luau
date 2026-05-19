@@ -3,8 +3,6 @@
 -- on the matching runtime; InMemory is portable and always available.
 
 local Polyfills = require("@self/Polyfills")
-local Future = require("@self/Future")
-local Errors = require("@self/Errors")
 local Types = require("@self/Types")
 
 local SessionStore = {}

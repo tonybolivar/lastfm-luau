@@ -96,7 +96,7 @@ function Request.Execute(client: any, methodName: string, userParams: { [string]
 		end
 	end
 
-	local function fire(): any
+	local function fire(): (any, string)
 		client._RateLimit:Acquire()
 
 		local httpReq

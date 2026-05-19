@@ -4,10 +4,7 @@ local Resources = require("@self/Resources")
 local Track = {}
 Track.__index = Track
 
-export type Track = typeof(setmetatable(
-	{} :: Resources.Track & { _Client: any },
-	Track
-))
+export type Track = typeof(setmetatable({} :: Resources.Track & { _Client: any }, Track))
 
 function Track.New(data: Resources.Track, client: any?): Track
 	local self: any = setmetatable(table.clone(data :: any), Track)

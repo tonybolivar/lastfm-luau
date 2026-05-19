@@ -15,11 +15,15 @@ function Geo.New(client: any): GeoNamespace
 end
 
 function Geo.GetTopArtistsAsync(self: GeoNamespace, country: string, opts: { Limit: number?, Page: number? }?)
-	local o = opts or {}
+	local o: any = opts or {}
 	return Future.New(function(): Page.Page<Resources.Artist>
 		local params: { [string]: any } = { country = country }
-		if o.Limit then params.limit = o.Limit end
-		if o.Page then params.page = o.Page end
+		if o.Limit then
+			params.limit = o.Limit
+		end
+		if o.Page then
+			params.page = o.Page
+		end
 		local resp = Request.Execute((self :: any)._Client, "geo.getTopArtists", params)
 		local topartists = (resp :: any).topartists
 		local items: { Resources.Artist } = {}
@@ -33,13 +37,23 @@ function Geo.GetTopArtistsAsync(self: GeoNamespace, country: string, opts: { Lim
 	end)
 end
 
-function Geo.GetTopTracksAsync(self: GeoNamespace, country: string, opts: { Limit: number?, Page: number?, Location: string? }?)
-	local o = opts or {}
+function Geo.GetTopTracksAsync(
+	self: GeoNamespace,
+	country: string,
+	opts: { Limit: number?, Page: number?, Location: string? }?
+)
+	local o: any = opts or {}
 	return Future.New(function(): Page.Page<Resources.Track>
 		local params: { [string]: any } = { country = country }
-		if o.Limit then params.limit = o.Limit end
-		if o.Page then params.page = o.Page end
-		if o.Location then params.location = o.Location end
+		if o.Limit then
+			params.limit = o.Limit
+		end
+		if o.Page then
+			params.page = o.Page
+		end
+		if o.Location then
+			params.location = o.Location
+		end
 		local resp = Request.Execute((self :: any)._Client, "geo.getTopTracks", params)
 		local tracks = (resp :: any).tracks
 		local items: { Resources.Track } = {}

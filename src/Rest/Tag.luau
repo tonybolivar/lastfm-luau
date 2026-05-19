@@ -15,10 +15,12 @@ function Tag.New(client: any): TagNamespace
 end
 
 function Tag.GetInfoAsync(self: TagNamespace, tag: string, opts: { Lang: string? }?)
-	local o = opts or {}
+	local o: any = opts or {}
 	return Future.New(function(): Resources.Tag
 		local params: { [string]: any } = { tag = tag }
-		if o.Lang then params.lang = o.Lang end
+		if o.Lang then
+			params.lang = o.Lang
+		end
 		local resp = Request.Execute((self :: any)._Client, "tag.getInfo", params)
 		return Parse.Tag((resp :: any).tag)
 	end)
@@ -36,11 +38,15 @@ function Tag.GetSimilarAsync(self: TagNamespace, tag: string)
 end
 
 function Tag.GetTopAlbumsAsync(self: TagNamespace, tag: string, opts: { Limit: number?, Page: number? }?)
-	local o = opts or {}
+	local o: any = opts or {}
 	return Future.New(function(): Page.Page<Resources.Album>
 		local params: { [string]: any } = { tag = tag }
-		if o.Limit then params.limit = o.Limit end
-		if o.Page then params.page = o.Page end
+		if o.Limit then
+			params.limit = o.Limit
+		end
+		if o.Page then
+			params.page = o.Page
+		end
 		local resp = Request.Execute((self :: any)._Client, "tag.getTopAlbums", params)
 		local albums = (resp :: any).albums
 		local items: { Resources.Album } = {}
@@ -55,11 +61,15 @@ function Tag.GetTopAlbumsAsync(self: TagNamespace, tag: string, opts: { Limit: n
 end
 
 function Tag.GetTopArtistsAsync(self: TagNamespace, tag: string, opts: { Limit: number?, Page: number? }?)
-	local o = opts or {}
+	local o: any = opts or {}
 	return Future.New(function(): Page.Page<Resources.Artist>
 		local params: { [string]: any } = { tag = tag }
-		if o.Limit then params.limit = o.Limit end
-		if o.Page then params.page = o.Page end
+		if o.Limit then
+			params.limit = o.Limit
+		end
+		if o.Page then
+			params.page = o.Page
+		end
 		local resp = Request.Execute((self :: any)._Client, "tag.getTopArtists", params)
 		local topartists = (resp :: any).topartists
 		local items: { Resources.Artist } = {}
@@ -85,11 +95,15 @@ function Tag.GetTopTagsAsync(self: TagNamespace)
 end
 
 function Tag.GetTopTracksAsync(self: TagNamespace, tag: string, opts: { Limit: number?, Page: number? }?)
-	local o = opts or {}
+	local o: any = opts or {}
 	return Future.New(function(): Page.Page<Resources.Track>
 		local params: { [string]: any } = { tag = tag }
-		if o.Limit then params.limit = o.Limit end
-		if o.Page then params.page = o.Page end
+		if o.Limit then
+			params.limit = o.Limit
+		end
+		if o.Page then
+			params.page = o.Page
+		end
 		local resp = Request.Execute((self :: any)._Client, "tag.getTopTracks", params)
 		local tracks = (resp :: any).tracks
 		local items: { Resources.Track } = {}

@@ -18,34 +18,62 @@ function Track.GetCorrectionAsync(self: TrackNamespace, artist: string, track: s
 	return Future.New(function(): Resources.Track?
 		local resp = Request.Execute((self :: any)._Client, "track.getCorrection", { artist = artist, track = track })
 		local corrections = (resp :: any).corrections
-		if type(corrections) ~= "table" or corrections == "" then return nil end
+		if type(corrections) ~= "table" or corrections == "" then
+			return nil
+		end
 		local correction = (corrections :: any).correction
-		if type(correction) ~= "table" then return nil end
+		if type(correction) ~= "table" then
+			return nil
+		end
 		local trackData = (correction :: any).track
-		if type(trackData) ~= "table" then return nil end
+		if type(trackData) ~= "table" then
+			return nil
+		end
 		return Parse.Track(trackData)
 	end)
 end
 
-function Track.GetInfoAsync(self: TrackNamespace, artist: string, track: string, opts: { Mbid: string?, Autocorrect: boolean?, Username: string? }?)
-	local o = opts or {}
+function Track.GetInfoAsync(
+	self: TrackNamespace,
+	artist: string,
+	track: string,
+	opts: { Mbid: string?, Autocorrect: boolean?, Username: string? }?
+)
+	local o: any = opts or {}
 	return Future.New(function(): Resources.Track
 		local params: { [string]: any } = { artist = artist, track = track }
-		if o.Mbid then params.mbid = o.Mbid end
-		if o.Autocorrect ~= nil then params.autocorrect = o.Autocorrect and "1" or "0" end
-		if o.Username then params.username = o.Username end
+		if o.Mbid then
+			params.mbid = o.Mbid
+		end
+		if o.Autocorrect ~= nil then
+			params.autocorrect = o.Autocorrect and "1" or "0"
+		end
+		if o.Username then
+			params.username = o.Username
+		end
 		local resp = Request.Execute((self :: any)._Client, "track.getInfo", params)
 		return Parse.Track((resp :: any).track)
 	end)
 end
 
-function Track.GetSimilarAsync(self: TrackNamespace, artist: string, track: string, opts: { Mbid: string?, Autocorrect: boolean?, Limit: number? }?)
-	local o = opts or {}
+function Track.GetSimilarAsync(
+	self: TrackNamespace,
+	artist: string,
+	track: string,
+	opts: { Mbid: string?, Autocorrect: boolean?, Limit: number? }?
+)
+	local o: any = opts or {}
 	return Future.New(function(): { Resources.Track }
 		local params: { [string]: any } = { artist = artist, track = track }
-		if o.Mbid then params.mbid = o.Mbid end
-		if o.Autocorrect ~= nil then params.autocorrect = o.Autocorrect and "1" or "0" end
-		if o.Limit then params.limit = o.Limit end
+		if o.Mbid then
+			params.mbid = o.Mbid
+		end
+		if o.Autocorrect ~= nil then
+			params.autocorrect = o.Autocorrect and "1" or "0"
+		end
+		if o.Limit then
+			params.limit = o.Limit
+		end
 		local resp = Request.Execute((self :: any)._Client, "track.getSimilar", params)
 		local out: { Resources.Track } = {}
 		for _, t in Parse.List((resp :: any).similartracks and (resp :: any).similartracks.track) do
@@ -55,13 +83,24 @@ function Track.GetSimilarAsync(self: TrackNamespace, artist: string, track: stri
 	end)
 end
 
-function Track.GetTagsAsync(self: TrackNamespace, artist: string, track: string, opts: { Mbid: string?, Autocorrect: boolean?, User: string? }?)
-	local o = opts or {}
+function Track.GetTagsAsync(
+	self: TrackNamespace,
+	artist: string,
+	track: string,
+	opts: { Mbid: string?, Autocorrect: boolean?, User: string? }?
+)
+	local o: any = opts or {}
 	return Future.New(function(): { Resources.Tag }
 		local params: { [string]: any } = { artist = artist, track = track }
-		if o.Mbid then params.mbid = o.Mbid end
-		if o.Autocorrect ~= nil then params.autocorrect = o.Autocorrect and "1" or "0" end
-		if o.User then params.user = o.User end
+		if o.Mbid then
+			params.mbid = o.Mbid
+		end
+		if o.Autocorrect ~= nil then
+			params.autocorrect = o.Autocorrect and "1" or "0"
+		end
+		if o.User then
+			params.user = o.User
+		end
 		local resp = Request.Execute((self :: any)._Client, "track.getTags", params)
 		local out: { Resources.Tag } = {}
 		for _, t in Parse.List((resp :: any).tags and (resp :: any).tags.tag) do
@@ -71,12 +110,21 @@ function Track.GetTagsAsync(self: TrackNamespace, artist: string, track: string,
 	end)
 end
 
-function Track.GetTopTagsAsync(self: TrackNamespace, artist: string, track: string, opts: { Mbid: string?, Autocorrect: boolean? }?)
-	local o = opts or {}
+function Track.GetTopTagsAsync(
+	self: TrackNamespace,
+	artist: string,
+	track: string,
+	opts: { Mbid: string?, Autocorrect: boolean? }?
+)
+	local o: any = opts or {}
 	return Future.New(function(): { Resources.Tag }
 		local params: { [string]: any } = { artist = artist, track = track }
-		if o.Mbid then params.mbid = o.Mbid end
-		if o.Autocorrect ~= nil then params.autocorrect = o.Autocorrect and "1" or "0" end
+		if o.Mbid then
+			params.mbid = o.Mbid
+		end
+		if o.Autocorrect ~= nil then
+			params.autocorrect = o.Autocorrect and "1" or "0"
+		end
 		local resp = Request.Execute((self :: any)._Client, "track.getTopTags", params)
 		local out: { Resources.Tag } = {}
 		for _, t in Parse.List((resp :: any).toptags and (resp :: any).toptags.tag) do
@@ -86,13 +134,23 @@ function Track.GetTopTagsAsync(self: TrackNamespace, artist: string, track: stri
 	end)
 end
 
-function Track.SearchAsync(self: TrackNamespace, query: string, opts: { Artist: string?, Limit: number?, Page: number? }?)
-	local o = opts or {}
+function Track.SearchAsync(
+	self: TrackNamespace,
+	query: string,
+	opts: { Artist: string?, Limit: number?, Page: number? }?
+)
+	local o: any = opts or {}
 	return Future.New(function(): Page.Page<Resources.Track>
 		local params: { [string]: any } = { track = query }
-		if o.Artist then params.artist = o.Artist end
-		if o.Limit then params.limit = o.Limit end
-		if o.Page then params.page = o.Page end
+		if o.Artist then
+			params.artist = o.Artist
+		end
+		if o.Limit then
+			params.limit = o.Limit
+		end
+		if o.Page then
+			params.page = o.Page
+		end
 		local resp = Request.Execute((self :: any)._Client, "track.search", params)
 		local results = (resp :: any).results
 		local matches = results and (results :: any).trackmatches
@@ -104,27 +162,29 @@ function Track.SearchAsync(self: TrackNamespace, query: string, opts: { Artist: 
 		local function refetch(p: number): any
 			return Track.SearchAsync(self, query, { Artist = o.Artist, Limit = o.Limit, Page = p })
 		end
-		if pagination.Total == 0 then return Page.Empty(refetch) end
+		if pagination.Total == 0 then
+			return Page.Empty(refetch)
+		end
 		return Page.Build({ Items = items, Pagination = pagination, Refetch = refetch })
 	end)
 end
 
 function Track.LoveAsync(self: TrackNamespace, artist: string, track: string)
-	return Future.New(function(): ()
+	return Future.New(function(): nil
 		Request.Execute((self :: any)._Client, "track.love", { artist = artist, track = track })
 		return nil
 	end)
 end
 
 function Track.UnloveAsync(self: TrackNamespace, artist: string, track: string)
-	return Future.New(function(): ()
+	return Future.New(function(): nil
 		Request.Execute((self :: any)._Client, "track.unlove", { artist = artist, track = track })
 		return nil
 	end)
 end
 
 function Track.AddTagsAsync(self: TrackNamespace, artist: string, track: string, tags: { string })
-	return Future.New(function(): ()
+	return Future.New(function(): nil
 		Request.Execute((self :: any)._Client, "track.addTags", {
 			artist = artist,
 			track = track,
@@ -135,7 +195,7 @@ function Track.AddTagsAsync(self: TrackNamespace, artist: string, track: string,
 end
 
 function Track.RemoveTagAsync(self: TrackNamespace, artist: string, track: string, tag: string)
-	return Future.New(function(): ()
+	return Future.New(function(): nil
 		Request.Execute((self :: any)._Client, "track.removeTag", {
 			artist = artist,
 			track = track,
@@ -145,16 +205,40 @@ function Track.RemoveTagAsync(self: TrackNamespace, artist: string, track: strin
 	end)
 end
 
-function Track.UpdateNowPlayingAsync(self: TrackNamespace, artist: string, track: string, opts: { Album: string?, AlbumArtist: string?, TrackNumber: number?, Duration: number?, Mbid: string?, Context: string? }?)
-	local o = opts or {}
-	return Future.New(function(): ()
+function Track.UpdateNowPlayingAsync(
+	self: TrackNamespace,
+	artist: string,
+	track: string,
+	opts: {
+		Album: string?,
+		AlbumArtist: string?,
+		TrackNumber: number?,
+		Duration: number?,
+		Mbid: string?,
+		Context: string?,
+	}?
+)
+	local o: any = opts or {}
+	return Future.New(function(): nil
 		local params: { [string]: any } = { artist = artist, track = track }
-		if o.Album then params.album = o.Album end
-		if o.AlbumArtist then params.albumArtist = o.AlbumArtist end
-		if o.TrackNumber then params.trackNumber = o.TrackNumber end
-		if o.Duration then params.duration = o.Duration end
-		if o.Mbid then params.mbid = o.Mbid end
-		if o.Context then params.context = o.Context end
+		if o.Album then
+			params.album = o.Album
+		end
+		if o.AlbumArtist then
+			params.albumArtist = o.AlbumArtist
+		end
+		if o.TrackNumber then
+			params.trackNumber = o.TrackNumber
+		end
+		if o.Duration then
+			params.duration = o.Duration
+		end
+		if o.Mbid then
+			params.mbid = o.Mbid
+		end
+		if o.Context then
+			params.context = o.Context
+		end
 		Request.Execute((self :: any)._Client, "track.updateNowPlaying", params)
 		return nil
 	end)
@@ -172,14 +256,30 @@ function Track.ScrobbleAsync(self: TrackNamespace, entries: { Resources.Scrobble
 			params["artist[" .. idx .. "]"] = entry.Artist
 			params["track[" .. idx .. "]"] = entry.Track
 			params["timestamp[" .. idx .. "]"] = entry.Timestamp
-			if entry.Album then params["album[" .. idx .. "]"] = entry.Album end
-			if entry.AlbumArtist then params["albumArtist[" .. idx .. "]"] = entry.AlbumArtist end
-			if entry.TrackNumber then params["trackNumber[" .. idx .. "]"] = entry.TrackNumber end
-			if entry.Mbid then params["mbid[" .. idx .. "]"] = entry.Mbid end
-			if entry.Duration then params["duration[" .. idx .. "]"] = entry.Duration end
-			if entry.ChosenByUser ~= nil then params["chosenByUser[" .. idx .. "]"] = entry.ChosenByUser and "1" or "0" end
-			if entry.Context then params["context[" .. idx .. "]"] = entry.Context end
-			if entry.StreamId then params["streamId[" .. idx .. "]"] = entry.StreamId end
+			if entry.Album then
+				params["album[" .. idx .. "]"] = entry.Album
+			end
+			if entry.AlbumArtist then
+				params["albumArtist[" .. idx .. "]"] = entry.AlbumArtist
+			end
+			if entry.TrackNumber then
+				params["trackNumber[" .. idx .. "]"] = entry.TrackNumber
+			end
+			if entry.Mbid then
+				params["mbid[" .. idx .. "]"] = entry.Mbid
+			end
+			if entry.Duration then
+				params["duration[" .. idx .. "]"] = entry.Duration
+			end
+			if entry.ChosenByUser ~= nil then
+				params["chosenByUser[" .. idx .. "]"] = entry.ChosenByUser and "1" or "0"
+			end
+			if entry.Context then
+				params["context[" .. idx .. "]"] = entry.Context
+			end
+			if entry.StreamId then
+				params["streamId[" .. idx .. "]"] = entry.StreamId
+			end
 		end
 		local resp = Request.Execute((self :: any)._Client, "track.scrobble", params)
 		local sc = (resp :: any).scrobbles

@@ -18,7 +18,9 @@ end
 -- Accept string | Roblox Player Instance. Caller-friendly: lets Roblox code do
 -- :GetRecentTracksAsync(player) without having to dig out .Name.
 local function resolveUser(value: any): string
-	if type(value) == "string" then return value end
+	if type(value) == "string" then
+		return value
+	end
 	if type(value) == "userdata" or (type(value) == "table" and (value :: any).Name and (value :: any).ClassName) then
 		return tostring((value :: any).Name)
 	end
@@ -33,14 +35,24 @@ function User.GetInfoAsync(self: UserNamespace, user: string | any)
 	end)
 end
 
-function User.GetFriendsAsync(self: UserNamespace, user: string | any, opts: { Limit: number?, Page: number?, Recenttracks: boolean? }?)
+function User.GetFriendsAsync(
+	self: UserNamespace,
+	user: string | any,
+	opts: { Limit: number?, Page: number?, Recenttracks: boolean? }?
+)
 	local userName = resolveUser(user)
-	local o = opts or {}
+	local o: any = opts or {}
 	return Future.New(function(): Page.Page<Resources.User>
 		local params: { [string]: any } = { user = userName }
-		if o.Limit then params.limit = o.Limit end
-		if o.Page then params.page = o.Page end
-		if o.Recenttracks ~= nil then params.recenttracks = o.Recenttracks and "1" or "0" end
+		if o.Limit then
+			params.limit = o.Limit
+		end
+		if o.Page then
+			params.page = o.Page
+		end
+		if o.Recenttracks ~= nil then
+			params.recenttracks = o.Recenttracks and "1" or "0"
+		end
 		local resp = Request.Execute((self :: any)._Client, "user.getFriends", params)
 		local friends = (resp :: any).friends
 		local items: { Resources.User } = {}
@@ -56,11 +68,15 @@ end
 
 function User.GetLovedTracksAsync(self: UserNamespace, user: string | any, opts: { Limit: number?, Page: number? }?)
 	local userName = resolveUser(user)
-	local o = opts or {}
+	local o: any = opts or {}
 	return Future.New(function(): Page.Page<Resources.Track>
 		local params: { [string]: any } = { user = userName }
-		if o.Limit then params.limit = o.Limit end
-		if o.Page then params.page = o.Page end
+		if o.Limit then
+			params.limit = o.Limit
+		end
+		if o.Page then
+			params.page = o.Page
+		end
 		local resp = Request.Execute((self :: any)._Client, "user.getLovedTracks", params)
 		local loved = (resp :: any).lovedtracks
 		local items: { Resources.Track } = {}
@@ -74,16 +90,30 @@ function User.GetLovedTracksAsync(self: UserNamespace, user: string | any, opts:
 	end)
 end
 
-function User.GetRecentTracksAsync(self: UserNamespace, user: string | any, opts: { Limit: number?, Page: number?, From: number?, To: number?, Extended: boolean? }?)
+function User.GetRecentTracksAsync(
+	self: UserNamespace,
+	user: string | any,
+	opts: { Limit: number?, Page: number?, From: number?, To: number?, Extended: boolean? }?
+)
 	local userName = resolveUser(user)
-	local o = opts or {}
+	local o: any = opts or {}
 	return Future.New(function(): Page.Page<Resources.Track>
 		local params: { [string]: any } = { user = userName }
-		if o.Limit then params.limit = o.Limit end
-		if o.Page then params.page = o.Page end
-		if o.From then params.from = o.From end
-		if o.To then params.to = o.To end
-		if o.Extended ~= nil then params.extended = o.Extended and "1" or "0" end
+		if o.Limit then
+			params.limit = o.Limit
+		end
+		if o.Page then
+			params.page = o.Page
+		end
+		if o.From then
+			params.from = o.From
+		end
+		if o.To then
+			params.to = o.To
+		end
+		if o.Extended ~= nil then
+			params.extended = o.Extended and "1" or "0"
+		end
 		local resp = Request.Execute((self :: any)._Client, "user.getRecentTracks", params)
 		local recent = (resp :: any).recenttracks
 		local items: { Resources.Track } = {}
@@ -91,31 +121,51 @@ function User.GetRecentTracksAsync(self: UserNamespace, user: string | any, opts
 			table.insert(items, Parse.Track(t))
 		end
 		local function refetch(p: number): any
-			return User.GetRecentTracksAsync(self, userName, { Limit = o.Limit, Page = p, From = o.From, To = o.To, Extended = o.Extended })
+			return User.GetRecentTracksAsync(
+				self,
+				userName,
+				{ Limit = o.Limit, Page = p, From = o.From, To = o.To, Extended = o.Extended }
+			)
 		end
 		return Page.Build({ Items = items, Pagination = Parse.Pagination(recent), Refetch = refetch })
 	end)
 end
 
-function User.GetPersonalTagsAsync(self: UserNamespace, user: string | any, tag: string, taggingType: "artist" | "album" | "track", opts: { Limit: number?, Page: number? }?)
+function User.GetPersonalTagsAsync(
+	self: UserNamespace,
+	user: string | any,
+	tag: string,
+	taggingType: "artist" | "album" | "track",
+	opts: { Limit: number?, Page: number? }?
+)
 	local userName = resolveUser(user)
-	local o = opts or {}
+	local o: any = opts or {}
 	return Future.New(function(): Page.Page<any>
 		local params: { [string]: any } = { user = userName, tag = tag, taggingtype = taggingType }
-		if o.Limit then params.limit = o.Limit end
-		if o.Page then params.page = o.Page end
+		if o.Limit then
+			params.limit = o.Limit
+		end
+		if o.Page then
+			params.page = o.Page
+		end
 		local resp = Request.Execute((self :: any)._Client, "user.getPersonalTags", params)
 		local taggings = (resp :: any).taggings
 		local items: { any } = {}
 		if taggingType == "artist" then
 			local list = taggings and (taggings :: any).artists and (taggings :: any).artists.artist
-			for _, a in Parse.List(list) do table.insert(items, Parse.Artist(a)) end
+			for _, a in Parse.List(list) do
+				table.insert(items, Parse.Artist(a))
+			end
 		elseif taggingType == "album" then
 			local list = taggings and (taggings :: any).albums and (taggings :: any).albums.album
-			for _, a in Parse.List(list) do table.insert(items, Parse.Album(a)) end
+			for _, a in Parse.List(list) do
+				table.insert(items, Parse.Album(a))
+			end
 		elseif taggingType == "track" then
 			local list = taggings and (taggings :: any).tracks and (taggings :: any).tracks.track
-			for _, t in Parse.List(list) do table.insert(items, Parse.Track(t)) end
+			for _, t in Parse.List(list) do
+				table.insert(items, Parse.Track(t))
+			end
 		end
 		local function refetch(p: number): any
 			return User.GetPersonalTagsAsync(self, userName, tag, taggingType, { Limit = o.Limit, Page = p })
@@ -124,14 +174,24 @@ function User.GetPersonalTagsAsync(self: UserNamespace, user: string | any, tag:
 	end)
 end
 
-function User.GetTopAlbumsAsync(self: UserNamespace, user: string | any, opts: { Period: Types.Period?, Limit: number?, Page: number? }?)
+function User.GetTopAlbumsAsync(
+	self: UserNamespace,
+	user: string | any,
+	opts: { Period: Types.Period?, Limit: number?, Page: number? }?
+)
 	local userName = resolveUser(user)
-	local o = opts or {}
+	local o: any = opts or {}
 	return Future.New(function(): Page.Page<Resources.Album>
 		local params: { [string]: any } = { user = userName }
-		if o.Period then params.period = o.Period end
-		if o.Limit then params.limit = o.Limit end
-		if o.Page then params.page = o.Page end
+		if o.Period then
+			params.period = o.Period
+		end
+		if o.Limit then
+			params.limit = o.Limit
+		end
+		if o.Page then
+			params.page = o.Page
+		end
 		local resp = Request.Execute((self :: any)._Client, "user.getTopAlbums", params)
 		local top = (resp :: any).topalbums
 		local items: { Resources.Album } = {}
@@ -145,14 +205,24 @@ function User.GetTopAlbumsAsync(self: UserNamespace, user: string | any, opts: {
 	end)
 end
 
-function User.GetTopArtistsAsync(self: UserNamespace, user: string | any, opts: { Period: Types.Period?, Limit: number?, Page: number? }?)
+function User.GetTopArtistsAsync(
+	self: UserNamespace,
+	user: string | any,
+	opts: { Period: Types.Period?, Limit: number?, Page: number? }?
+)
 	local userName = resolveUser(user)
-	local o = opts or {}
+	local o: any = opts or {}
 	return Future.New(function(): Page.Page<Resources.Artist>
 		local params: { [string]: any } = { user = userName }
-		if o.Period then params.period = o.Period end
-		if o.Limit then params.limit = o.Limit end
-		if o.Page then params.page = o.Page end
+		if o.Period then
+			params.period = o.Period
+		end
+		if o.Limit then
+			params.limit = o.Limit
+		end
+		if o.Page then
+			params.page = o.Page
+		end
 		local resp = Request.Execute((self :: any)._Client, "user.getTopArtists", params)
 		local top = (resp :: any).topartists
 		local items: { Resources.Artist } = {}
@@ -168,10 +238,12 @@ end
 
 function User.GetTopTagsAsync(self: UserNamespace, user: string | any, opts: { Limit: number? }?)
 	local userName = resolveUser(user)
-	local o = opts or {}
+	local o: any = opts or {}
 	return Future.New(function(): { Resources.Tag }
 		local params: { [string]: any } = { user = userName }
-		if o.Limit then params.limit = o.Limit end
+		if o.Limit then
+			params.limit = o.Limit
+		end
 		local resp = Request.Execute((self :: any)._Client, "user.getTopTags", params)
 		local out: { Resources.Tag } = {}
 		for _, t in Parse.List((resp :: any).toptags and (resp :: any).toptags.tag) do
@@ -181,14 +253,24 @@ function User.GetTopTagsAsync(self: UserNamespace, user: string | any, opts: { L
 	end)
 end
 
-function User.GetTopTracksAsync(self: UserNamespace, user: string | any, opts: { Period: Types.Period?, Limit: number?, Page: number? }?)
+function User.GetTopTracksAsync(
+	self: UserNamespace,
+	user: string | any,
+	opts: { Period: Types.Period?, Limit: number?, Page: number? }?
+)
 	local userName = resolveUser(user)
-	local o = opts or {}
+	local o: any = opts or {}
 	return Future.New(function(): Page.Page<Resources.Track>
 		local params: { [string]: any } = { user = userName }
-		if o.Period then params.period = o.Period end
-		if o.Limit then params.limit = o.Limit end
-		if o.Page then params.page = o.Page end
+		if o.Period then
+			params.period = o.Period
+		end
+		if o.Limit then
+			params.limit = o.Limit
+		end
+		if o.Page then
+			params.page = o.Page
+		end
 		local resp = Request.Execute((self :: any)._Client, "user.getTopTracks", params)
 		local top = (resp :: any).toptracks
 		local items: { Resources.Track } = {}
@@ -221,11 +303,15 @@ end
 
 function User.GetWeeklyAlbumChartAsync(self: UserNamespace, user: string | any, opts: { From: number?, To: number? }?)
 	local userName = resolveUser(user)
-	local o = opts or {}
+	local o: any = opts or {}
 	return Future.New(function(): { Resources.Album }
 		local params: { [string]: any } = { user = userName }
-		if o.From then params.from = o.From end
-		if o.To then params.to = o.To end
+		if o.From then
+			params.from = o.From
+		end
+		if o.To then
+			params.to = o.To
+		end
 		local resp = Request.Execute((self :: any)._Client, "user.getWeeklyAlbumChart", params)
 		local out: { Resources.Album } = {}
 		for _, a in Parse.List((resp :: any).weeklyalbumchart and (resp :: any).weeklyalbumchart.album) do
@@ -237,11 +323,15 @@ end
 
 function User.GetWeeklyArtistChartAsync(self: UserNamespace, user: string | any, opts: { From: number?, To: number? }?)
 	local userName = resolveUser(user)
-	local o = opts or {}
+	local o: any = opts or {}
 	return Future.New(function(): { Resources.Artist }
 		local params: { [string]: any } = { user = userName }
-		if o.From then params.from = o.From end
-		if o.To then params.to = o.To end
+		if o.From then
+			params.from = o.From
+		end
+		if o.To then
+			params.to = o.To
+		end
 		local resp = Request.Execute((self :: any)._Client, "user.getWeeklyArtistChart", params)
 		local out: { Resources.Artist } = {}
 		for _, a in Parse.List((resp :: any).weeklyartistchart and (resp :: any).weeklyartistchart.artist) do
@@ -253,11 +343,15 @@ end
 
 function User.GetWeeklyTrackChartAsync(self: UserNamespace, user: string | any, opts: { From: number?, To: number? }?)
 	local userName = resolveUser(user)
-	local o = opts or {}
+	local o: any = opts or {}
 	return Future.New(function(): { Resources.Track }
 		local params: { [string]: any } = { user = userName }
-		if o.From then params.from = o.From end
-		if o.To then params.to = o.To end
+		if o.From then
+			params.from = o.From
+		end
+		if o.To then
+			params.to = o.To
+		end
 		local resp = Request.Execute((self :: any)._Client, "user.getWeeklyTrackChart", params)
 		local out: { Resources.Track } = {}
 		for _, t in Parse.List((resp :: any).weeklytrackchart and (resp :: any).weeklytrackchart.track) do

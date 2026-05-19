@@ -53,9 +53,13 @@ return function()
 		end)
 
 		Framework.it("ScrobbleAsync rejects empty batches and >50", function()
-			local fake = FakeHttp.New({ ["track.scrobble"] = [[{"scrobbles":{"@attr":{"accepted":"0","ignored":"0"}}}]] })
+			local fake =
+				FakeHttp.New({ ["track.scrobble"] = [[{"scrobbles":{"@attr":{"accepted":"0","ignored":"0"}}}]] })
 			local client = LastFM.new({
-				ApiKey = "k", Secret = "s", HttpClient = fake, RateLimit = { Enabled = false },
+				ApiKey = "k",
+				Secret = "s",
+				HttpClient = fake,
+				RateLimit = { Enabled = false },
 			})
 			client:SetSession({ Name = "alice", Key = "sk" })
 			-- Empty

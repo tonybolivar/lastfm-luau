@@ -5,8 +5,10 @@
 local Types = require("@self/Types")
 
 export type Wiki = {
-	Summary: string,
-	Content: string,
+	Summary: string, -- HTML stripped, whitespace collapsed
+	Content: string, -- HTML stripped, whitespace collapsed
+	SummaryRaw: string, -- as returned by Last.fm (may contain HTML)
+	ContentRaw: string, -- as returned by Last.fm (may contain HTML)
 	Published: Types.LastDate?,
 	Url: string?,
 }

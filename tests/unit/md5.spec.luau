@@ -17,9 +17,8 @@ return function()
 			Framework.expect(Md5.Hash("message digest")).toBe("f96b697d7cb7938d525a2f31aaf161d0")
 		end)
 		Framework.it("hashes the lazy dog vector", function()
-			Framework.expect(Md5.Hash("The quick brown fox jumps over the lazy dog")).toBe(
-				"9e107d9d372bb6826bd81d3542a419d6"
-			)
+			Framework.expect(Md5.Hash("The quick brown fox jumps over the lazy dog"))
+				.toBe("9e107d9d372bb6826bd81d3542a419d6")
 		end)
 		Framework.it("output is always 32 hex chars lowercase", function()
 			local h = Md5.Hash("anything")

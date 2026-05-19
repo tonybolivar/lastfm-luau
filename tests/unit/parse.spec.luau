@@ -57,6 +57,34 @@ return function()
 		end)
 	end)
 
+	Framework.describe("Parse.Wiki", function()
+		Framework.it("strips HTML tags from Summary and Content", function()
+			local w = Parse.Wiki({
+				summary = [[Daft Punk are <a href="http://last.fm/x">a French duo</a> formed in 1993.]],
+				content = [[<p>Lots of <b>info</b> here.</p>]],
+				url = "http://last.fm/x",
+			})
+			Framework.expect(w and w.Summary).toBe("Daft Punk are a French duo formed in 1993.")
+			Framework.expect(w and w.Content).toBe("Lots of info here.")
+		end)
+		Framework.it("preserves raw HTML on SummaryRaw and ContentRaw", function()
+			local w = Parse.Wiki({
+				summary = [[<a href="x">name</a>]],
+				content = [[<p>x</p>]],
+			})
+			Framework.expect(w and w.SummaryRaw).toBe([[<a href="x">name</a>]])
+			Framework.expect(w and w.ContentRaw).toBe([[<p>x</p>]])
+		end)
+		Framework.it("decodes common HTML entities", function()
+			local w = Parse.Wiki({ summary = "rock &amp; roll &quot;quoted&quot; &#39;text&#39;", content = "" })
+			Framework.expect(w and w.Summary).toBe([[rock & roll "quoted" 'text']])
+		end)
+		Framework.it("returns nil for non-table input", function()
+			Framework.expect(Parse.Wiki(nil)).toBeNil()
+			Framework.expect(Parse.Wiki("")).toBeNil()
+		end)
+	end)
+
 	Framework.describe("Parse.Track", function()
 		Framework.it("extracts name + artist from a recent-tracks-shaped object", function()
 			local t = Parse.Track({

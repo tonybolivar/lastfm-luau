@@ -36,7 +36,7 @@ function Retry.Run<T>(thunk: () -> T, config: RetryConfig): T
 		end
 
 		if Errors.IsLastFMError(result) then
-			local err = result :: Errors.LastFMError
+			local err = (result :: any) :: Errors.LastFMError
 			err.Attempt = attempt
 			lastErr = err
 			if not Errors.IsRetryable(err) or attempt == attempts then

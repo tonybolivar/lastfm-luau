@@ -4,10 +4,7 @@ local Resources = require("@self/Resources")
 local Tag = {}
 Tag.__index = Tag
 
-export type Tag = typeof(setmetatable(
-	{} :: Resources.Tag & { _Client: any },
-	Tag
-))
+export type Tag = typeof(setmetatable({} :: Resources.Tag & { _Client: any }, Tag))
 
 function Tag.New(data: Resources.Tag, client: any?): Tag
 	local self: any = setmetatable(table.clone(data :: any), Tag)

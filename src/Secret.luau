@@ -21,10 +21,7 @@ secretMt.__newindex = function(_, key: any)
 	error(`Secret is immutable (attempted to set "{tostring(key)}")`, 2)
 end
 
-export type Secret = typeof(setmetatable(
-	{} :: { _Value: string },
-	secretMt
-))
+export type Secret = typeof(setmetatable({} :: { _Value: string }, secretMt))
 
 function Secret.New(value: string): Secret
 	assert(type(value) == "string", "Secret value must be a string")

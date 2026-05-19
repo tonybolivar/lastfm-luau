@@ -15,11 +15,15 @@ function Chart.New(client: any): ChartNamespace
 end
 
 function Chart.GetTopArtistsAsync(self: ChartNamespace, opts: { Limit: number?, Page: number? }?)
-	local o = opts or {}
+	local o: any = opts or {}
 	return Future.New(function(): Page.Page<Resources.Artist>
 		local params: { [string]: any } = {}
-		if o.Limit then params.limit = o.Limit end
-		if o.Page then params.page = o.Page end
+		if o.Limit then
+			params.limit = o.Limit
+		end
+		if o.Page then
+			params.page = o.Page
+		end
 		local resp = Request.Execute((self :: any)._Client, "chart.getTopArtists", params)
 		local artists = (resp :: any).artists
 		local items: { Resources.Artist } = {}
@@ -34,11 +38,15 @@ function Chart.GetTopArtistsAsync(self: ChartNamespace, opts: { Limit: number?, 
 end
 
 function Chart.GetTopTagsAsync(self: ChartNamespace, opts: { Limit: number?, Page: number? }?)
-	local o = opts or {}
+	local o: any = opts or {}
 	return Future.New(function(): Page.Page<Resources.Tag>
 		local params: { [string]: any } = {}
-		if o.Limit then params.limit = o.Limit end
-		if o.Page then params.page = o.Page end
+		if o.Limit then
+			params.limit = o.Limit
+		end
+		if o.Page then
+			params.page = o.Page
+		end
 		local resp = Request.Execute((self :: any)._Client, "chart.getTopTags", params)
 		local tags = (resp :: any).tags
 		local items: { Resources.Tag } = {}
@@ -53,11 +61,15 @@ function Chart.GetTopTagsAsync(self: ChartNamespace, opts: { Limit: number?, Pag
 end
 
 function Chart.GetTopTracksAsync(self: ChartNamespace, opts: { Limit: number?, Page: number? }?)
-	local o = opts or {}
+	local o: any = opts or {}
 	return Future.New(function(): Page.Page<Resources.Track>
 		local params: { [string]: any } = {}
-		if o.Limit then params.limit = o.Limit end
-		if o.Page then params.page = o.Page end
+		if o.Limit then
+			params.limit = o.Limit
+		end
+		if o.Page then
+			params.page = o.Page
+		end
 		local resp = Request.Execute((self :: any)._Client, "chart.getTopTracks", params)
 		local tracks = (resp :: any).tracks
 		local items: { Resources.Track } = {}

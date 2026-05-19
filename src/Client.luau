@@ -44,7 +44,7 @@ function Client.New(config: Config): Client
 	local userAgent = if config.UserAgent then `{config.UserAgent} {DEFAULT_UA}` else DEFAULT_UA
 
 	local logger = config.Logger or Logger.Noop
-	local rateLimitConfig = config.RateLimit or {}
+	local rateLimitConfig: any = config.RateLimit or {}
 	local rateLimit: any
 	if rateLimitConfig.Enabled == false then
 		rateLimit = RateLimit.Noop()
@@ -59,7 +59,7 @@ function Client.New(config: Config): Client
 
 	local cacheImpl = config.Cache or InMemoryCache.New()
 	local httpClient = config.HttpClient or Polyfills.Http
-	local retryConfig = config.Retry or {}
+	local retryConfig: any = config.Retry or {}
 
 	local self: any = setmetatable({
 		_ApiKey = config.ApiKey,
@@ -140,7 +140,7 @@ function Client.LoadSessionAsync(self: Client, storeKey: string)
 end
 
 function Client.SaveSessionAsync(self: Client, storeKey: string)
-	return Future.New(function(): ()
+	return Future.New(function(): nil
 		local store = (self :: any)._SessionStore
 		if not store then
 			error(Errors.New("InvalidParameter", "Config.SessionStore is not configured"), 0)
@@ -175,7 +175,7 @@ function Client.SaveSessionAsync(self: Client, storeKey: string)
 end
 
 function Client.ClearSessionAsync(self: Client, storeKey: string)
-	return Future.New(function(): ()
+	return Future.New(function(): nil
 		Client.ForgetSession(self)
 		local store = (self :: any)._SessionStore
 		if not store then

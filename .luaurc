@@ -2,7 +2,7 @@
 	"languageMode": "strict",
 	"lintErrors": true,
 	"typeErrors": true,
-	"globals": [],
+	"globals": ["warn", "task"],
 	"aliases": {
 		"self": "./src"
 	}

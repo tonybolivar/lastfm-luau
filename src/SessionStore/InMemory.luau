@@ -13,8 +13,8 @@ mt.__index = mt
 
 mt.Kind = "InMemory"
 
-function mt.SaveAsync(self: any, key: string, session: Types.StoredSession): Future.FutureLike<Errors.LastFMError, ()>
-	return Future.New(function(): ()
+function mt.SaveAsync(self: any, key: string, session: Types.StoredSession): Future.FutureLike<Errors.LastFMError, nil>
+	return Future.New(function(): nil
 		self._Store[key] = session
 		return nil
 	end)
@@ -26,8 +26,8 @@ function mt.LoadAsync(self: any, key: string): Future.FutureLike<Errors.LastFMEr
 	end)
 end
 
-function mt.ClearAsync(self: any, key: string): Future.FutureLike<Errors.LastFMError, ()>
-	return Future.New(function(): ()
+function mt.ClearAsync(self: any, key: string): Future.FutureLike<Errors.LastFMError, nil>
+	return Future.New(function(): nil
 		self._Store[key] = nil
 		return nil
 	end)

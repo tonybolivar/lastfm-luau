@@ -36,12 +36,12 @@ local function deepEqual(a: any, b: any): boolean
 	if type(a) ~= "table" then
 		return false
 	end
-	for k, v in (a :: any) do
+	for k, v in a :: any do
 		if not deepEqual(v, (b :: any)[k]) then
 			return false
 		end
 	end
-	for k in (b :: any) do
+	for k in b :: any do
 		if (a :: any)[k] == nil then
 			return false
 		end
@@ -135,7 +135,7 @@ function Framework.run(): boolean
 	local passed, failed = 0, 0
 	local failures: { string } = {}
 	for _, case in cases do
-		local ok, err = pcall(case.fn)
+		local ok, err = pcall(case.fn :: any)
 		if ok then
 			passed += 1
 			print(`PASS  {case.name}`)

@@ -15,11 +15,15 @@ function Library.New(client: any): LibraryNamespace
 end
 
 function Library.GetArtistsAsync(self: LibraryNamespace, user: string, opts: { Limit: number?, Page: number? }?)
-	local o = opts or {}
+	local o: any = opts or {}
 	return Future.New(function(): Page.Page<Resources.Artist>
 		local params: { [string]: any } = { user = user }
-		if o.Limit then params.limit = o.Limit end
-		if o.Page then params.page = o.Page end
+		if o.Limit then
+			params.limit = o.Limit
+		end
+		if o.Page then
+			params.page = o.Page
+		end
 		local resp = Request.Execute((self :: any)._Client, "library.getArtists", params)
 		local artists = (resp :: any).artists
 		local items: { Resources.Artist } = {}

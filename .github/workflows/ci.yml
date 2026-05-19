@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  check:
+    name: Lint, format, typecheck, test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rokit
+        uses: CompeyDev/setup-rokit@v0.1.2
+
+      - name: Format check (StyLua)
+        run: stylua --check src tests
+
+      - name: Lint (selene)
+        run: selene src tests
+
+      - name: Typecheck (luau-lsp)
+        run: luau-lsp analyze src tests --platform=standard
+
+      - name: Run test suite (Lune)
+        run: lune run tests/runner.luau
+
+  wally-package:
+    name: Wally package validation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Rokit
+        uses: CompeyDev/setup-rokit@v0.1.2
+      - name: Package
+        run: wally package --output lastfm-luau.zip
+      - name: Upload package artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: lastfm-luau-package
+          path: lastfm-luau.zip
+          retention-days: 7
