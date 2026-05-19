@@ -14,48 +14,69 @@ production-ready.
 - Type-check (`luau-lsp analyze`), lint (`selene`), format (`stylua --check`)
 - Wally manifest packaging (`wally package`)
 
-## Needs Roblox Studio (not validated yet)
+## Validated in Roblox Studio (2026-05-19)
 
-### 1. DataStore round-trip
-The `SessionStore.RobloxDataStore` implementation uses `DataStoreService:UpdateAsync`
-with a concurrent-merge function and budget-warning logic. Tested via type-check
-and structurally, but not exercised against a live DataStore. Before publishing:
+All four Studio-only items below were exercised in a live Studio session via
+the Roblox Studio MCP (place loaded, `LastFM` ModuleScript tree placed under
+`ReplicatedStorage`, API services + HTTP enabled). The pass uncovered three
+Roblox-runtime bugs that the Lune CI never reached; each was committed as its
+own fix before the corresponding validation was re-run and recorded green.
 
-1. Build the project: `rojo build default.project.json -o lastfm-luau.rbxm`
-2. Open a Studio place, insert the rbxm into ReplicatedStorage
-3. Enable Studio API services
-4. Run a server Script that:
-   - Constructs a Client with `SessionStore = RobloxDataStore.New(...)`
-   - Calls `SetSession` with a fake session and `SaveSessionAsync(123)`
-   - Restarts the script
-   - Calls `LoadSessionAsync(123)` and confirms round-trip
-   - Calls `ClearSessionAsync(123)`, then `LoadSessionAsync` returns false
-5. Trigger a code-9 API response (e.g., by passing a corrupt session key)
-   and confirm the auto-invalidation drops the in-memory session AND clears
-   the DataStore entry.
+### 1. DataStore round-trip — Validated
+Live DataStoreService round-trip through `SessionStore.RobloxDataStore`:
+SetSession → SaveSessionAsync(12345) → ForgetSession → LoadSessionAsync(12345)
+restored `Name = "alice"`, `Subscriber = false`; ClearSessionAsync(12345)
+followed by LoadSessionAsync(12345) returned `false`. UpdateAsync concurrent-
+merge logic verified by writing a newer-StoredAt entry, then an older one —
+the merger correctly kept the newer record. No budget-low warning fired
+(Studio budget stayed well above the 6-request threshold).
 
-### 2. In-experience auth flow
-`Polyfills.Roblox.AuthGui.Show(parent, url)` builds a ScreenGui with a
-read-only TextBox the player can select-and-copy. Verified structurally
-(parses, type-checks) but the UX needs eyes:
+Studio prerequisite: "Enable Studio Access to API Services" must be on in
+Game Settings → Security; otherwise `DataStoreService:GetDataStore` throws
+"You must publish this place to the web" before the lib ever runs.
 
-1. Test that `setclipboard` falls back gracefully (it doesn't exist on the
-   stock player client; the helper does not call it)
-2. Test that `GuiService:OpenBrowserWindow` (deprecated) doesn't crash when
-   it no-ops on console / mobile
-3. Test on PC, mobile, and console — TextBox selection behavior differs
+### 2. AuthGui visual smoke — Validated
+`AuthGui.Show(playerGui, url)` rendered the expected modal in Play mode:
+title "Approve Last.fm access", subtitle, full URL in a read-only TextBox
+(TextEditable = false, ClearTextOnFocus = false), copy hint below. No
+crashes from the `GuiService:OpenBrowserWindow` best-effort call (it's
+already wrapped in pcall). Visual capture archived during the validation
+session.
 
-### 3. HTTP enabled error
-The Roblox HTTP adapter rethrows the "Http requests are not enabled" error
-as a clear `HttpError`. Needs a Studio test with HttpService.HttpEnabled = false
-to confirm the friendly message reaches the caller.
+Caveat carried forward: TextBox selection on `TextEditable=false` boxes
+does not visibly highlight in Studio screenshots; Ctrl+C copy behavior
+across PC / mobile / console still needs eyes from an actual user.
 
-### 4. Rate-limit interaction with Roblox's 500/min cap
-A single server is capped at 500 `HttpService:RequestAsync` calls per minute.
-Our default 5 rps limiter sustains 300/min, well under the cap. But verify
-with `task.spawn`-ed parallel callers that the limiter actually serializes
-them via `task.wait`. This was validated in Lune; Roblox's task scheduler
-has different yield semantics worth confirming.
+### 3. HTTP enabled error — Validated
+With `HttpService.HttpEnabled = false`, `client.Track:GetInfoAsync(...)`
+returns Err with `Kind = "HttpError"` and the friendly Message
+"HttpService is not enabled. In Studio: HttpService.HttpEnabled = true.
+In published places: Game Settings > Security > Allow HTTP Requests."
+
+This validation uncovered two Roblox-only bugs, fixed before recording green:
+- The runtime-detection helper used `rawget(_G, "game")`, which always
+  returns nil in Roblox (game is a script-scoped global, not in `_G`).
+  Detection fell through to "Unknown" and the Roblox HTTP polyfill was
+  never selected.
+- `HttpService:RequestAsync` rejected the lib's `user-agent` header before
+  the HttpEnabled check could trigger, so the friendly hint never fired.
+  Roblox-managed headers are now stripped in the polyfill. The case of
+  Roblox's error message ("HTTP requests are not enabled") also didn't
+  match the lib's substring check ("Http..."); fixed with a lower-case
+  comparison.
+
+### 4. Rate-limit + task scheduler — Validated
+With `RateLimit = { Enabled = true, RequestsPerSecond = 5, Burst = 5 }`,
+the baseline `client.Track:GetInfoAsync("Daft Punk", "One More Time")`
+succeeded against the live API. Ten `task.spawn`-ed concurrent calls
+completed in **1.08 s**, exactly on target for 5 rps (5 instant from
+burst, 5 throttled at 0.2 s intervals). Zero unexpected error kinds.
+
+This validation uncovered a concurrency race in `RateLimit.Acquire`:
+under load, multiple coroutines woke from the same `task.wait` and each
+"consumed" the single refilled token, defeating the limiter. Fixed by
+looping the acquire so each waiter re-checks the bucket after wakeup.
+Before the fix the same 10-call test ran in 0.31 s — no real throttling.
 
 ## How to validate before publishing
 
