@@ -1,0 +1,9 @@
+{
+	"languageMode": "strict",
+	"lintErrors": true,
+	"typeErrors": true,
+	"globals": [],
+	"aliases": {
+		"self": "./"
+	}
+}

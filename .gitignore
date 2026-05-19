@@ -1,0 +1,38 @@
+# Wally packages (installed locally, not committed)
+Packages/
+ServerPackages/
+DevPackages/
+wally.lock
+sourcemap.json
+
+# Rojo build artifacts
+*.rbxl
+*.rbxlx
+*.rbxm
+*.rbxmx
+build/
+
+# Lune
+.lune/cache/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Secrets — never commit
+.env
+.env.local
+.env.*.local
+secrets.luau
+secrets.lua
+*.secret
+
+# Test artifacts
+coverage/

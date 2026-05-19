@@ -1,0 +1,5 @@
+std = "roblox+luau"
+
+[config]
+shadowing = "allow"
+unused_variable = { allow_unused_self = true }
