@@ -9,6 +9,26 @@ authors = ["Tony Bolivar <tony.e.bolivar@gmail.com>"]
 repository = "https://github.com/tonybolivar/lastfm-luau"
 homepage = "https://github.com/tonybolivar/lastfm-luau"
 include = ["src/**", "wally.toml", "LICENSE", "README.md"]
+exclude = [
+	"tests/**",
+	"tests",
+	"examples/**",
+	"examples",
+	"scripts/**",
+	"scripts",
+	".github/**",
+	".github",
+	"tmp/**",
+	"tmp",
+	"default.project.json",
+	"rokit.toml",
+	"selene.toml",
+	"stylua.toml",
+	".luaurc",
+	".gitignore",
+	"wally.lock",
+	"sourcemap.json",
+]
 
 # lastfm-luau ships self-contained: pure-Luau MD5 in src/Md5.luau, a small
 # Future/Result implementation in src/Future.luau, and a minimal in-tree test
