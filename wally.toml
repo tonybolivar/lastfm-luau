@@ -20,6 +20,8 @@ exclude = [
 	".github",
 	"tmp/**",
 	"tmp",
+	"images/**",
+	"images",
 	"default.project.json",
 	"rokit.toml",
 	"selene.toml",

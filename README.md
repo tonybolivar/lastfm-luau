@@ -112,6 +112,10 @@ local info = client.Track:GetInfoAsync("Artist", "Track"):Await():UnwrapOk()
 print(info.Name)
 ```
 
+## Demo
+
+![DeathCow01 profile dump in Roblox Studio](images/demo.png)
+
 ## License
 
 [MIT](LICENSE).
