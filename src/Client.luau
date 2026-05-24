@@ -197,7 +197,17 @@ function Client.GetAuthenticatedUserAsync(self: Client)
 		if not s then
 			error(Errors.New("AuthRequired", "No active session"), 0)
 		end
-		local resp = Rest.Request.Execute(self, "user.getInfo", {})
+		-- Prefer the cached session Name when set; user.getInfo with a real
+		-- user= param is the simple, well-defined call. If the session was
+		-- restored from a bare key (Name == ""), attach `sk` so Last.fm can
+		-- identify the caller via the session instead.
+		local params: { [string]: any } = {}
+		if s.Name and s.Name ~= "" then
+			params.user = s.Name
+		else
+			params.sk = Secret.Reveal(s.Key)
+		end
+		local resp = Rest.Request.Execute(self, "user.getInfo", params)
 		local parsed = Parse.User((resp :: any).user)
 		if parsed.Name and parsed.Name ~= "" then
 			s.Name = parsed.Name
