@@ -80,7 +80,13 @@ function Parse.LastDate(raw: any): Types.LastDate?
 		return { UnixSeconds = 0, Iso8601 = raw }
 	end
 	if type(raw) == "table" then
-		local uts = (raw :: any).uts or ((raw :: any)["@attr"] and (raw :: any)["@attr"].unixtime)
+		-- Last.fm's date shapes vary by endpoint:
+		--   recenttracks.track[].date           -> { uts = "...", "#text" = "..." }
+		--   user.getInfo.user.registered        -> { unixtime = "...", "#text" = ... }
+		--   some `@attr`-wrapped variants       -> { ["@attr"] = { unixtime = "..." }, "#text" = ... }
+		local uts = (raw :: any).uts
+			or (raw :: any).unixtime
+			or ((raw :: any)["@attr"] and (raw :: any)["@attr"].unixtime)
 		local text = (raw :: any)["#text"]
 		local unixSeconds = Parse.Number(uts)
 		if unixSeconds then

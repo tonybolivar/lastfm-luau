@@ -107,4 +107,57 @@ return function()
 			Framework.expect(t.NowPlaying).toBeTruthy()
 		end)
 	end)
+
+	Framework.describe("Parse.LastDate", function()
+		Framework.it("reads .uts (recenttracks shape)", function()
+			local d = Parse.LastDate({ uts = "1700000000", ["#text"] = "14 Nov 2023, 22:13" })
+			Framework.expect(d and d.UnixSeconds).toBe(1700000000)
+			Framework.expect(d and d.Iso8601).toBe("14 Nov 2023, 22:13")
+		end)
+		Framework.it("reads .unixtime directly (user.getInfo registered shape)", function()
+			local d = Parse.LastDate({ unixtime = "1654497098", ["#text"] = 1654497098 })
+			Framework.expect(d and d.UnixSeconds).toBe(1654497098)
+		end)
+		Framework.it("reads @attr.unixtime (wrapped variant)", function()
+			local d = Parse.LastDate({ ["@attr"] = { unixtime = "1700000000" }, ["#text"] = "ignored" })
+			Framework.expect(d and d.UnixSeconds).toBe(1700000000)
+		end)
+		Framework.it("treats a number directly as unix seconds", function()
+			local d = Parse.LastDate(1700000000)
+			Framework.expect(d and d.UnixSeconds).toBe(1700000000)
+		end)
+		Framework.it("returns nil for nil input", function()
+			Framework.expect(Parse.LastDate(nil)).toBeNil()
+		end)
+	end)
+
+	Framework.describe("Parse.User", function()
+		-- Regression: user.getInfo.user.registered comes back as
+		-- { unixtime = "1654497098", "#text" = 1654497098 } and not under
+		-- @attr. Parse.LastDate was only checking .uts and @attr.unixtime,
+		-- so the registered date silently became nil. Verified against a
+		-- live API response for DeathCow01 on 2026-05-24.
+		Framework.it("extracts registered from user.getInfo's unixtime shape", function()
+			local u = Parse.User({
+				name = "DeathCow01",
+				realname = "tony",
+				url = "https://www.last.fm/user/DeathCow01",
+				country = "United States",
+				playcount = "130231",
+				registered = { unixtime = "1654497098", ["#text"] = 1654497098 },
+				subscriber = "0",
+				type = "user",
+			})
+			Framework.expect(u.Name).toBe("DeathCow01")
+			Framework.expect(u.RealName).toBe("tony")
+			Framework.expect(u.Country).toBe("United States")
+			Framework.expect(u.PlayCount).toBe(130231)
+			Framework.expect(u.Registered and u.Registered.UnixSeconds).toBe(1654497098)
+		end)
+		Framework.it("returns a minimal user when registered is missing", function()
+			local u = Parse.User({ name = "Alice", url = "" })
+			Framework.expect(u.Name).toBe("Alice")
+			Framework.expect(u.Registered).toBeNil()
+		end)
+	end)
 end

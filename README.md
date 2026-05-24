@@ -8,7 +8,7 @@ API client for Luau. Roblox and Lune.
 
 ```toml
 [dependencies]
-LastFM = "tonybolivar/lastfm-luau@1.0.1"
+LastFM = "tonybolivar/lastfm-luau@1.0.2"
 ```
 
 Then `wally install`.
