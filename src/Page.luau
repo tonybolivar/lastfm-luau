@@ -95,7 +95,7 @@ function Page.Build<T>(opts: {
 	})
 end
 
--- Empty page — carried-forward fix from pylast #530: empty searches return an
+-- Empty page, carried-forward fix from pylast #530: empty searches return an
 -- empty Page<T> rather than crashing on a missing `matches` element.
 function Page.Empty<T>(refetch: Refetch<T>): Page<T>
 	return Page.New({

@@ -84,7 +84,7 @@ local Endpoints: { [string]: EndpointInfo } = {
 	["artist.removeTag"] = write("artist.removeTag"),
 	["artist.search"] = read("artist.search", STANDARD, "none"),
 
-	-- Auth (3) — all signed; getMobileSession is POST per Last.fm spec
+	-- Auth (3), all signed; getMobileSession is POST per Last.fm spec
 	["auth.getMobileSession"] = mobileWrite("auth.getMobileSession"),
 	["auth.getSession"] = signedRead("auth.getSession"),
 	["auth.getToken"] = signedRead("auth.getToken"),

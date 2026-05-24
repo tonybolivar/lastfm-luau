@@ -1,5 +1,5 @@
 --!nocheck
--- AuthGui.Show(parent, url, opts?) — displays the Last.fm approval URL in a
+-- AuthGui.Show(parent, url, opts?), displays the Last.fm approval URL in a
 -- modal card with a read-only TextBox the user can select-and-copy.
 -- Returns the created ScreenGui so callers can :Destroy() it after auth completes.
 

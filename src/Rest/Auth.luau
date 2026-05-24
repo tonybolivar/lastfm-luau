@@ -26,7 +26,7 @@ function Auth.GetTokenAsync(self: AuthNamespace)
 	end)
 end
 
--- Synchronous (no network) — builds the URL the user opens in a browser.
+-- Synchronous (no network), builds the URL the user opens in a browser.
 function Auth.GetApprovalUrl(self: AuthNamespace, token: string): Approval
 	local apiKey = (self :: any)._Client._ApiKey
 	return {
@@ -47,7 +47,7 @@ function Auth.GetSessionAsync(self: AuthNamespace, token: string)
 	end)
 end
 
--- Mobile auth — exchanges username + plaintext password (or pre-hashed password)
+-- Mobile auth, exchanges username + plaintext password (or pre-hashed password)
 -- for a session key. The library hashes the password if `Password` is provided;
 -- pass `AuthToken` instead if you already have MD5(username .. MD5(password)).
 function Auth.GetMobileSessionAsync(

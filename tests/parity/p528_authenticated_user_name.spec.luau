@@ -1,5 +1,5 @@
 --!strict
--- pylast PR #528 — Fix `AuthenticatedUser.get_name` returning empty string.
+-- pylast PR #528, Fix `AuthenticatedUser.get_name` returning empty string.
 -- https://github.com/pylast/pylast/pull/528
 --
 -- Regression check: when a session is restored with no resolved Name,

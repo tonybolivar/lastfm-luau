@@ -1,5 +1,5 @@
 --!strict
--- pylast PR #532 — Fix cache miss on requests with username param.
+-- pylast PR #532, Fix cache miss on requests with username param.
 -- https://github.com/pylast/pylast/pull/532
 --
 -- Regression check: two calls to track.getInfo with the same `username` must

@@ -131,7 +131,7 @@ function Request.Execute(client: any, methodName: string, userParams: { [string]
 			error(err, 0)
 		end
 
-		-- Parse body unconditionally — Last.fm returns errors as HTTP 200 with
+		-- Parse body unconditionally, Last.fm returns errors as HTTP 200 with
 		-- { error, message } JSON, so status alone is unreliable.
 		local body = response.body or ""
 		local decoded: any

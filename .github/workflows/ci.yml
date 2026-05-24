@@ -23,7 +23,7 @@ jobs:
         run: selene src tests
 
       - name: Typecheck (luau-lsp)
-        run: luau-lsp analyze src tests --platform=standard
+        run: luau-lsp analyze --platform=standard src tests
 
       - name: Run test suite (Lune)
         run: lune run tests/runner.luau

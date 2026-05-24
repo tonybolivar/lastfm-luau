@@ -22,7 +22,7 @@ return function()
 			Framework.expect(info.Duration).toBe(320000)
 		end)
 
-		Framework.it("LoveAsync requires a session — throws AuthRequired otherwise", function()
+		Framework.it("LoveAsync requires a session, throws AuthRequired otherwise", function()
 			local fake = FakeHttp.New({})
 			local client = LastFM.new({
 				ApiKey = "k",

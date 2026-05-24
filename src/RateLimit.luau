@@ -79,7 +79,7 @@ function RateLimit.New(opts: {
 	}, bucketMt) :: any
 end
 
--- Noop bucket — used when rate limiting is disabled. Acquire() returns instantly.
+-- Noop bucket, used when rate limiting is disabled. Acquire() returns instantly.
 local noopMt = {}
 noopMt.__index = noopMt
 function noopMt.Acquire(_) end

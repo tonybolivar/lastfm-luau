@@ -1,10 +1,10 @@
 --!strict
--- pylast PR #531 — Fix Country and Tag equality raising AttributeError.
+-- pylast PR #531, Fix Country and Tag equality raising AttributeError.
 -- https://github.com/pylast/pylast/pull/531
 --
 -- Regression check: Class instances compared against incompatible types must
 -- not error. lastfm-luau deliberately does NOT override __eq on any Class,
--- so Luau's default reference equality applies — that's safe against any
+-- so Luau's default reference equality applies, that's safe against any
 -- type. This test pins the choice; if a future change adds __eq, the test
 -- will fail unless the new __eq also type-checks defensively.
 

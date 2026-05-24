@@ -1,5 +1,5 @@
 --!strict
--- pylast PR #529 — Add Album.get_album_artist_from_tracks and find_compilation_variant.
+-- pylast PR #529, Add Album.get_album_artist_from_tracks and find_compilation_variant.
 -- https://github.com/pylast/pylast/pull/529
 --
 -- Regression check: all four branches of GetAlbumArtistFromTracks plus the

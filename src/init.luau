@@ -1,5 +1,5 @@
 --!strict
--- lastfm-luau — Last.fm API client for Luau (Roblox + Lune)
+-- lastfm-luau, Last.fm API client for Luau (Roblox + Lune)
 --
 -- Usage:
 --   local LastFM = require(ReplicatedStorage.Packages.LastFM)

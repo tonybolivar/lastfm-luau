@@ -2,7 +2,7 @@
 	"languageMode": "strict",
 	"lintErrors": true,
 	"typeErrors": true,
-	"globals": ["warn", "task"],
+	"globals": ["warn", "task", "game", "script", "workspace", "Instance", "Enum", "UDim", "UDim2", "Color3", "Vector2", "Vector3", "CFrame"],
 	"aliases": {
 		"self": "./src"
 	}

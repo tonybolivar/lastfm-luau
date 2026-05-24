@@ -16,7 +16,7 @@ if not apiKey or apiKey == "" then
 	error("LASTFM_API_KEY environment variable is required", 0)
 end
 
-print(`lastfm-luau smoke — runtime: {LastFM.Runtime}`)
+print(`lastfm-luau smoke, runtime: {LastFM.Runtime}`)
 print(`API key: {string.sub(apiKey, 1, 8)}... (secret {if secret then "set" else "not set"})`)
 print()
 
@@ -32,7 +32,7 @@ local client = LastFM.new({
 })
 
 -- 1. Read public data
-print("== track.getInfo: Daft Punk — One More Time ==")
+print("== track.getInfo: Daft Punk, One More Time ==")
 local trackResult = client.Track:GetInfoAsync("Daft Punk", "One More Time"):Await()
 if trackResult:IsErr() then
 	local err = trackResult:UnwrapErr()
@@ -58,7 +58,7 @@ local page = recentResult:UnwrapOk()
 print(`  Page {page.PageNumber} of {page.TotalPages} ({page.TotalItems} total)`)
 for i, t in page.Items do
 	local when = if t.Date then t.Date.Iso8601 else "now playing"
-	print(`  {i}. {when} — {t.Artist.Name} — {t.Name}`)
+	print(`  {i}. {when}, {t.Artist.Name}, {t.Name}`)
 end
 print()
 
@@ -70,7 +70,7 @@ local elapsed = (os.clock() - before) * 1000
 print(`  Second call took {string.format("%.2f", elapsed)} ms (cache hit if << 100ms)`)
 print()
 
--- 4. Signed request — auth.getToken. Only runs if SECRET is set.
+-- 4. Signed request, auth.getToken. Only runs if SECRET is set.
 if secret then
 	print("== auth.getToken (signed) ==")
 	local tokenResult = client.Auth:GetTokenAsync():Await()
@@ -84,7 +84,7 @@ if secret then
 	print(`  Approval URL: {approval.Url}`)
 	print()
 else
-	print("(skipping auth.getToken — LASTFM_SECRET not set)")
+	print("(skipping auth.getToken, LASTFM_SECRET not set)")
 	print()
 end
 
@@ -98,7 +98,7 @@ end
 local emptyPage = emptyResult:UnwrapOk()
 print(`  Items: {#emptyPage.Items}, TotalItems: {emptyPage.TotalItems}`)
 assert(#emptyPage.Items == 0, "expected empty Items list on no-results search")
-print(`  OK — empty search returned an empty Page without crashing`)
+print(`  OK, empty search returned an empty Page without crashing`)
 print()
 
 print("All smoke checks passed.")

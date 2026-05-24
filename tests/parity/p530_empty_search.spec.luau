@@ -1,5 +1,5 @@
 --!strict
--- pylast PR #530 — Return empty result instead of IndexError on empty search.
+-- pylast PR #530, Return empty result instead of IndexError on empty search.
 -- https://github.com/pylast/pylast/pull/530
 --
 -- Regression check: empty searches must return an empty Page<T> rather than
