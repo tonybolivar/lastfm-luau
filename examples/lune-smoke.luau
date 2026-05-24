@@ -23,7 +23,7 @@ print()
 local client = LastFM.new({
 	ApiKey = apiKey,
 	Secret = secret,
-	UserAgent = "lastfm-luau-smoke/0.1",
+	UserAgent = "lastfm-luau-smoke/1.0",
 	Logger = function(level, message, ctx)
 		if level == "warn" or level == "error" then
 			print(`[{level}] {message}`)

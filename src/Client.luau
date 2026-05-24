@@ -18,7 +18,7 @@ local Parse = require("@self/Parse")
 local Client = {}
 Client.__index = Client
 
-local DEFAULT_UA = "lastfm-luau/0.1 (+https://github.com/tonybolivar/lastfm-luau)"
+local DEFAULT_UA = "lastfm-luau/1.0 (+https://github.com/tonybolivar/lastfm-luau)"
 
 export type Config = {
 	ApiKey: string,

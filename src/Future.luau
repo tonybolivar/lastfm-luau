@@ -71,7 +71,7 @@ function futureMt.Await<E, T>(self: FutureLike<E, T>): Result<E, T>
 		return s._Result
 	end
 	if s._Running then
-		error("Future is already being awaited concurrently; v0.1 does not support concurrent awaits", 2)
+		error("Future is already being awaited concurrently; concurrent awaits on the same Future are not supported", 2)
 	end
 	s._Running = true
 	local ok, value = pcall(s._Thunk)

@@ -1,6 +1,6 @@
 [package]
 name = "tonybolivar/lastfm-luau"
-version = "0.1.0"
+version = "1.0.0"
 description = "Last.fm API client for Luau (Roblox + Lune). Typed, async, with DataStore-backed session persistence."
 license = "MIT"
 registry = "https://github.com/UpliftGames/wally-index"

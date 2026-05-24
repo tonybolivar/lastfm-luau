@@ -3,10 +3,10 @@
 -- https://github.com/pylast/pylast/pull/531
 --
 -- Regression check: Class instances compared against incompatible types must
--- not error. v0.1 of lastfm-luau deliberately does NOT override __eq on any
--- Class, so Luau's default reference equality applies — that's safe against
--- any type. This test pins the choice; if a future change adds __eq, the
--- test will fail unless the new __eq also type-checks defensively.
+-- not error. lastfm-luau deliberately does NOT override __eq on any Class,
+-- so Luau's default reference equality applies — that's safe against any
+-- type. This test pins the choice; if a future change adds __eq, the test
+-- will fail unless the new __eq also type-checks defensively.
 
 local Framework = require("../Framework")
 local Tag = require("@self/Classes/Tag")
