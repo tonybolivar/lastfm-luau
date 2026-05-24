@@ -1,6 +1,6 @@
 [package]
 name = "tonybolivar/lastfm-luau"
-version = "1.0.2"
+version = "1.0.3"
 description = "Last.fm API client for Luau (Roblox + Lune). Typed, async, with DataStore-backed session persistence."
 license = "MIT"
 registry = "https://github.com/UpliftGames/wally-index"
@@ -8,7 +8,7 @@ realm = "shared"
 authors = ["Tony Bolivar <tony.e.bolivar@gmail.com>"]
 repository = "https://github.com/tonybolivar/lastfm-luau"
 homepage = "https://github.com/tonybolivar/lastfm-luau"
-include = ["src/**", "wally.toml", "LICENSE", "README.md"]
+include = ["src/**", "wally.toml", "LICENSE", "README.md", "default.project.json"]
 exclude = [
 	"tests/**",
 	"tests",
@@ -22,7 +22,6 @@ exclude = [
 	"tmp",
 	"images/**",
 	"images",
-	"default.project.json",
 	"rokit.toml",
 	"selene.toml",
 	"stylua.toml",
@@ -30,6 +29,7 @@ exclude = [
 	".gitignore",
 	"wally.lock",
 	"sourcemap.json",
+	"*.zip",
 ]
 
 # lastfm-luau ships self-contained: pure-Luau MD5 in src/Md5.luau, a small
